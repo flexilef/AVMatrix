@@ -139,7 +139,7 @@ function drawTableFromCsv(data, divId, tableId) {
 Example 5
  */
 
-var domain_implicit_csv = d3.csv("deldroid-input/domain-implicit-communication-1.csv",
+var domain_implicit_csv = d3.csv("deldroid-input/domain-permission-granted-1.csv",
     function(error, data) {
         if (error) throw error;
         console.log(data); // [{"Hello": "world"}, …]
