@@ -62,19 +62,19 @@ var domain_explicit_csv = d3.csv("deldroid-input/domain-explicit-communication-1
         console.log(data); // [{"Hello": "world"}, …]
 
         //csv file is loaded as data: an array of objects and an array (of the column names)
-        drawTableFromCsv(data)
+        drawTableFromCsv(data, "example4", "table-explicit")
     });
 
 
 //create a table of one row
 
-function drawTableFromCsv(data) {
+function drawTableFromCsv(data, divId, tableId) {
     console.log("COLUMNS:" + data.columns.length);
     var colHeaders = data.columns;
 
-    var tableHeader = d3.select("#example4")
+    var tableHeader = d3.select("#" + divId)
         .append("table")
-        .attr("id", "domain-table")
+        .attr("id", tableId)
         .selectAll("th")
         .data(data.columns)
         .enter()
@@ -82,7 +82,7 @@ function drawTableFromCsv(data) {
         .text( function(d) { return d; });
 
     //This creates the table header
-    var tableRows = d3.select("#domain-table")
+    var tableRows = d3.select("#" + tableId)
         .selectAll("tr")
         .data(data)
         .enter()
@@ -134,3 +134,16 @@ function drawTableFromCsv(data) {
     //     .text(function(d) { return d['5']; })
     //     .append("td");
 }
+
+/*
+Example 5
+ */
+
+var domain_implicit_csv = d3.csv("deldroid-input/domain-implicit-communication-1.csv",
+    function(error, data) {
+        if (error) throw error;
+        console.log(data); // [{"Hello": "world"}, …]
+
+        //csv file is loaded as data: an array of objects and an array (of the column names)
+        drawTableFromCsv(data, "example5", "table-implicit")
+    });
