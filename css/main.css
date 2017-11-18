@@ -97,7 +97,16 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+table, td, th {
+    border: 1px cornflowerblue solid;
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+}
 
+th {
+    background-color: #b3d4fc;
+}
 
 
 
