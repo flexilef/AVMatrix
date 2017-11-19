@@ -217,19 +217,33 @@ var tableJSON = {
 
 
 function renderJsonTable(table) {
+    //create table
+    d3.select("#example7")
+        .append("table")
+        .attr("id", "table7")
+        .append("thead")
+        .attr("id", "thead7");
+
+    d3.select("#table7")
+        .append("tbody")
+        .attr("id", "tbody7");
+
     var column_data = [];
 
-    //prepare the column data
-    var num_columns_added = 0;
-    table.domains.forEach(function(domain) {
-        column_data = column_data.concat(domain.domain_headers);
-        num_columns_added++;
+    //prepare the column data - uncomment this to use with the create_table_headers()
+    // var num_columns_added = 0;
+    // table.domains.forEach(function(domain) {
+    //     column_data = column_data.concat(domain.domain_headers);
+    //     num_columns_added++;
+    //
+    //     if(num_columns_added == 3) {
+    //         print_debug(column_data);
+    //         create_table_headers(column_data);
+    //     }
+    // });
 
-        if(num_columns_added == 3) {
-            print_columns(column_data);
-            create_table_headers(column_data);
-        }
-    });
+    //create all headers
+    create_all_table_headers(table.domains);
 
     //prepare row data
     var row_data = [];
@@ -265,23 +279,64 @@ function renderJsonTable(table) {
 /*
 debug
  */
-function print_columns(columns) {
+function print_debug(columns) {
     console.log(columns);
 }
 
-function create_table_headers(columns) {
-    d3.select("#example7")
-        .append("table")
-        .attr("id", "table7")
+// function create_table_headers(columns) {
+//     d3.select("#example7")
+//         .append("table")
+//         .attr("id", "table7")
+//         .selectAll("th")
+//         .data(columns)
+//         .enter()
+//         .append("th")
+//         .text( function(d) { return d; });
+// }
+
+function create_table_headers(headers) {
+    d3.select("#thead7")
+        .append("tr")
         .selectAll("th")
-        .data(columns)
+        .data(headers)
         .enter()
         .append("th")
         .text( function(d) { return d; });
 }
 
+function create_table_super_headers(headers, colspan) {
+    d3.select("#thead7")
+        .append("tr")
+        .selectAll("th")
+        .data(headers)
+        .enter()
+        .append("th")
+        .classed("colspan=5", true)
+        .text( function(d) { return d; });
+}
+
+function create_all_table_headers(domains) {
+    var sub_headings = [];
+    var domain_names = [];
+    var num_columns_added = 0;
+
+    domains.forEach(function(domain) {
+        domain_names = domain_names.concat(domain.domain_name);
+        sub_headings = sub_headings.concat(domain.domain_headers);
+        num_columns_added++;
+
+        if(num_columns_added == 3) {
+            print_debug(sub_headings);
+            print_debug(domain_names);
+
+            create_table_super_headers(domain_names, 2);
+            create_table_headers(sub_headings);
+        }
+    });
+}
+
 function create_table_rows(rows) {
-    d3.select("#table7")
+    d3.select("#tbody7")
         .append("tr")
         .selectAll("td")
         .data(rows.data)
