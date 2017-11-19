@@ -66,12 +66,12 @@ var domain_explicit_csv = d3.csv("deldroid-input/domain-explicit-communication-1
     });
 
 
-//create a table of one row
-
+//create a table from a csv file
 function drawTableFromCsv(data, divId, tableId) {
     console.log("COLUMNS:" + data.columns.length);
     var colHeaders = data.columns;
 
+    //This creates the table header
     var tableHeader = d3.select("#" + divId)
         .append("table")
         .attr("id", tableId)
@@ -81,7 +81,7 @@ function drawTableFromCsv(data, divId, tableId) {
         .append("th")
         .text( function(d) { return d; });
 
-    //This creates the table header
+    //This creates the rows
     var tableRows = d3.select("#" + tableId)
         .selectAll("tr")
         .data(data)
@@ -139,7 +139,7 @@ function drawTableFromCsv(data, divId, tableId) {
 Example 5
  */
 
-var domain_implicit_csv = d3.csv("deldroid-input/domain-permission-granted-1.csv",
+var domain_permission_csv = d3.csv("deldroid-input/domain-permission-granted-1.csv",
     function(error, data) {
         if (error) throw error;
         console.log(data); // [{"Hello": "world"}, …]
@@ -147,3 +147,147 @@ var domain_implicit_csv = d3.csv("deldroid-input/domain-permission-granted-1.csv
         //csv file is loaded as data: an array of objects and an array (of the column names)
         drawTableFromCsv(data, "example5", "table-implicit")
     });
+
+/*
+Example 6 - Shitty example do not use... kept just for educational purposes*
+ */
+var groupedData;
+
+var permission_file = d3.csv("deldroid-input/domain-permission-granted-1.csv",
+    function(error, data) {
+        if (error) throw error;
+
+        var permission_data = data;
+        var permission_data_columns = data.columns;
+
+        var explicit_file = d3.csv("deldroid-input/domain-explicit-communication-1.csv",
+            function(error, data) {
+                if (error) throw error;
+
+                var explicit_data = data;
+                var explicit_data_columns = data.columns;
+
+                var groupedColumns = explicit_data_columns.concat(permission_data_columns);
+                // var groupedColumns = _.uniq(explicit_data_columns.concat(permission_data_columns));
+                var groupedData = permission_data.concat(explicit_data);
+                groupedData["columns"] = groupedColumns;
+
+                console.log(groupedData);
+                drawTableFromCsv(groupedData, "example6", "table-grouped");
+            });
+    });
+
+/*
+Example 7 - Main JSON for entire table render
+ */
+
+var tableJSON = {
+    "domains": [
+        {
+            "domain_name": "explicit",
+            "domain_headers": [0, 1, 2, 3, 4, 5]
+        },
+        {
+            "domain_name": "implicit",
+            "domain_headers": [0, 1, 2, 3, 4, 5]
+        },
+        {
+            "domain_name": "perm_granted",
+            "domain_headers": ["Location", "SMS", "Bluetooth"]
+        }
+    ],
+    "rows": [
+        {
+            "app_name": "FunGame",
+            "component": "LevelUp",
+            "data": [
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0
+            ]
+        },
+        {
+            "app_name": "FunGame",
+            "component": "main",
+            "data": [
+                1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0
+            ]
+        }
+    ]
+};
+
+
+
+function renderJsonTable(table) {
+    var column_data = [];
+
+    //prepare the column data
+    var num_columns_added = 0;
+    table.domains.forEach(function(domain) {
+        column_data = column_data.concat(domain.domain_headers);
+        num_columns_added++;
+
+        if(num_columns_added == 3) {
+            print_columns(column_data);
+            create_table_headers(column_data);
+        }
+    });
+
+    //prepare row data
+    var row_data = [];
+    table.rows.forEach(function(row) {
+        create_table_rows(row);
+        console.log(row);
+    });
+
+
+    //This creates the table header
+    // var tableHeaders = d3.select("#example7")
+    //     .append("table")
+    //     .attr("id", "7")
+    //     .selectAll("th")
+    //     .data(column_data)
+    //     .enter()
+    //     .append("th")
+    //     .text( function(d) { return d; });
+    //
+    // var tableRows = d3.select("#table7")
+    //     .selectAll("tr")
+    //     .data(jsonTable)
+    //     .enter()
+    //     .append("tr");
+
+    // tableRows.selectAll("td")
+    //     .data( function(d) { console.log(d.data); return d.data; })
+    //     .enter()
+    //     .append("td")
+    //     .text( function(d) { return d.domain_data; });
+}
+
+/*
+debug
+ */
+function print_columns(columns) {
+    console.log(columns);
+}
+
+function create_table_headers(columns) {
+    d3.select("#example7")
+        .append("table")
+        .attr("id", "table7")
+        .selectAll("th")
+        .data(columns)
+        .enter()
+        .append("th")
+        .text( function(d) { return d; });
+}
+
+function create_table_rows(rows) {
+    d3.select("#table7")
+        .append("tr")
+        .selectAll("td")
+        .data(rows.data)
+        .enter()
+        .append("td")
+        .text( function(d) { return d; })
+}
+
+renderJsonTable(tableJSON);

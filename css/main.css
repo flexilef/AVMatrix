@@ -97,6 +97,10 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+body {
+    margin: 5% 15% 10% 15%;
+}
+
 table, td, th {
     border: 1px cornflowerblue solid;
     border-collapse: collapse;
