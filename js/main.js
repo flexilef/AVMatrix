@@ -244,7 +244,7 @@ function print_debug(columns) {
     console.log(columns);
 }
 
-function create_table_headers(headers) {
+function create_table_sub_headers(headers) {
     d3.select("#thead7")
         .append("tr")
         .selectAll("th")
@@ -254,7 +254,7 @@ function create_table_headers(headers) {
         .text( function(d) { return d; });
 }
 
-function create_table_super_headers(headers) {
+function create_table_headers(headers) {
     d3.select("#thead7")
         .append("tr")
         .selectAll("th")
@@ -274,22 +274,22 @@ function create_all_table_headers(domains) {
     var num_columns_added = 0;
 
     domains.forEach(function(domain) {
-        domain_names = domain_names.concat(domain.domain_name);
-        domain_headers.domains = domain_names;
+        domain_names.push(domain.domain_name);
         domain_headers.colspan.push(domain.domain_headers.length);
-
         sub_headers = sub_headers.concat(domain.domain_headers);
         num_columns_added++;
-
-        if(num_columns_added == 3) {
-            print_debug(sub_headers);
-            print_debug(domain_names);
-
-            // create_table_super_headers(domain_names, domain.domain_headers.length);
-            create_table_super_headers(domain_headers);
-            create_table_headers(sub_headers);
-        }
     });
+
+    if(num_columns_added == 3) {
+        print_debug(sub_headers);
+        print_debug(domain_names);
+        print_debug(domain_headers);
+        // create_table_super_headers(domain_names, domain.domain_headers.length);
+    }
+
+    domain_headers.domains = domain_names;
+    create_table_headers(domain_headers);
+    create_table_sub_headers(sub_headers);
 }
 
 function create_table_rows(rows) {
