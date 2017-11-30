@@ -69,7 +69,7 @@ var tableJSON = {
             "package": "Messaging",
             "components": [
                 {
-                    "name": "ListMsgs",
+                    "component": "ListMsgs",
                     "domain_data": [
                         {
                             "domain": "explicit_domain",
@@ -90,7 +90,7 @@ var tableJSON = {
                     ]
                 },
                 {
-                    "name": "Composer",
+                    "component": "Composer",
                     "domain_data": [
                         {
                             "domain": "explicit_domain",
@@ -142,6 +142,7 @@ function create_all_table_rows(div_id, table) {
     var rows_data = [];
     var grouped_domain_data = [];
 
+    //prepare rows data
     table.packages.forEach(function(package) {
         package.components.forEach(function(component) {
             component.domain_data.forEach(function(domain_datum) {
@@ -150,7 +151,16 @@ function create_all_table_rows(div_id, table) {
                 });
             });
 
-            rows_data.push(grouped_domain_data);
+
+            var data = {
+                "package": package.package,
+                "component": component.component,
+                "components_count": package.components.length,
+                "data": grouped_domain_data
+            }
+
+            rows_data.push(data);
+
             grouped_domain_data = [];
         });
     });
@@ -161,58 +171,78 @@ function create_all_table_rows(div_id, table) {
 }
 
 function create_table_rows(div_id, rows) {
-    d3.select("#" + div_id + "_tbody")
+    var row = d3.select("#" + div_id + "_tbody")
         .append("tr")
-        .selectAll("td")
-        .data(rows)
+        .classed(rows.package + "-" + rows.component, true);
+
+    //create side headers
+    row.append("td")
+        // .attr("rowspan", rows.components_count)
+        .text(rows.package);
+    row.append("td")
+        .text(rows.component);
+
+    d3.select("tr." + rows.package + "-" + rows.component)
+        .selectAll("td.g") //g to create a new grouping? and prevent rebinding data to the first two td headers
+        .data(rows.data)
         .enter()
         .append("td")
         .text( function(d) { return d; })
 }
 
-//accepts an array of a domains and their subdomains
 function create_all_table_headers(div_id, table) {
-    var sub_headers = [];
-    var domain_names = [];
-    var domain_headers = {};
-    domain_headers.colspan = [];
+    var domain_headers = {
+        "domains": [ "Packages", "Components"],
+        "subdomains": [ " ", " " ],
+        "colspan": [ 1, 1 ]
+    };
 
-    var num_columns_added = 0;
-
+    //prepare all domain header arrays
     table.domains.forEach(function(domain) {
-        domain_names.push(domain.name);
+        domain_headers.domains.push(domain.name);
         domain_headers.colspan.push(domain.subdomains.length);
 
-        //create subheader array
-        domain.subdomains.forEach(function(element) {
-            sub_headers.push(element.name);
+        //create subdomains array
+        domain.subdomains.forEach(function(subdomain) {
+            domain_headers.subdomains.push(subdomain.name);
         });
-
-        num_columns_added++;
     });
 
-    if(num_columns_added == 3) {
-        print_debug(sub_headers);
-        print_debug(domain_names);
-        print_debug(domain_headers);
-    }
-
-    domain_headers.domains = domain_names;
-    create_table_headers(div_id, domain_headers);
-    create_table_sub_headers(div_id, sub_headers);
+    create_domain_headers(div_id, domain_headers);
 }
 
-function create_table_sub_headers(div_id, headers) {
+
+/*
+Accepts the id of the container div, and a "subheaders" array
+1. subheaders - list of the subdomain names to display
+
+Example:
+   var subheaders = [ "Location", "SMS", "Bluetooth" ]
+ */
+function create_domain_subheaders(div_id, subheaders) {
     d3.select("#" + div_id + "_thead")
         .append("tr")
         .selectAll("th")
-        .data(headers)
+        .data(subheaders)
         .enter()
         .append("th")
         .text( function(d) { return d; });
 }
 
-function create_table_headers(div_id, headers) {
+/*
+Accepts the id of the container div, and a "headers" object containing 3 arrays:
+1. domains - list of the domain names to display
+2. subdomains - list of the subdomain names to display
+3. colspan - number of columns that the domain should span
+
+Example:
+   var domain_headers = {
+        "domains": [],
+        "subdomains": [],
+        "colspan": []
+    };
+ */
+function create_domain_headers(div_id, headers) {
     d3.select("#" + div_id + "_thead")
         .append("tr")
         .selectAll("th")
@@ -221,6 +251,8 @@ function create_table_headers(div_id, headers) {
         .append("th")
         .attr("colspan", function(d, i) { return headers.colspan[i]; } )
         .text( function(d) { return d; });
+
+    create_domain_subheaders(div_id, headers.subdomains);
 }
 
 renderJsonTable(tableJSON, "example8");
