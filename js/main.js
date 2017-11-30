@@ -8,6 +8,12 @@ Example 8 - New JSON
 var tableJSON = {
     "domains": [
         {
+            "name": " ",
+            "subdomains": [
+                { "name": "ID" }
+            ]
+        },
+        {
             "name": "explicit",
             "subdomains": [
                 { "name": 0 },
@@ -72,6 +78,10 @@ var tableJSON = {
                     "component": "ListMsgs",
                     "domain_data": [
                         {
+                            "domain": " ",
+                            "data": [0]
+                        },
+                        {
                             "domain": "explicit_domain",
                             "data": [0, 1, 0, 0, 0, 0]
                         },
@@ -92,6 +102,10 @@ var tableJSON = {
                 {
                     "component": "Composer",
                     "domain_data": [
+                        {
+                            "domain": " ",
+                            "data": [1]
+                        },
                         {
                             "domain": "explicit_domain",
                             "data": [1, 0, 0, 0, 0, 0]
@@ -177,7 +191,7 @@ function create_table_rows(div_id, rows) {
 
     //create side headers
     row.append("td")
-        // .attr("rowspan", rows.components_count)
+        .attr("rowspan", rows.components_count)
         .text(rows.package);
     row.append("td")
         .text(rows.component);
@@ -192,8 +206,8 @@ function create_table_rows(div_id, rows) {
 
 function create_all_table_headers(div_id, table) {
     var domain_headers = {
-        "domains": [ "Packages", "Components"],
-        "subdomains": [ " ", " " ],
+        "domains": [ "", ""],
+        "subdomains": [ "Packages", "Components" ],
         "colspan": [ 1, 1 ]
     };
 

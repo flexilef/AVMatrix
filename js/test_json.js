@@ -142,9 +142,14 @@ var tableJSON2 = {
 };
 
 /* New JSON */
-
 var tableJSON = {
     "domains": [
+        {
+            "name": " ",
+            "subdomains": [
+                { "name": "ID" }
+            ]
+        },
         {
             "name": "explicit",
             "subdomains": [
@@ -207,8 +212,12 @@ var tableJSON = {
             "package": "Messaging",
             "components": [
                 {
-                    "name": "ListMsgs",
+                    "component": "ListMsgs",
                     "domain_data": [
+                        {
+                            "domain": " ",
+                            "data": [0]
+                        },
                         {
                             "domain": "explicit_domain",
                             "data": [0, 1, 0, 0, 0, 0]
@@ -228,8 +237,12 @@ var tableJSON = {
                     ]
                 },
                 {
-                    "name": "Composer",
+                    "component": "Composer",
                     "domain_data": [
+                        {
+                            "domain": " ",
+                            "data": [1]
+                        },
                         {
                             "domain": "explicit_domain",
                             "data": [1, 0, 0, 0, 0, 0]

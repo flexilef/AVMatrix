@@ -112,6 +112,13 @@ th {
     background-color: #b3d4fc;
 }
 
+.header {
+    background-color: #b3d4fc;
+    border: 1px cornflowerblue solid;
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+}
 
 
 
