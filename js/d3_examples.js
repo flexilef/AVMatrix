@@ -81,7 +81,7 @@ function drawTableFromCsv(data, divId, tableId) {
         .append("th")
         .text( function(d) { return d; });
 
-    //This creates the rows
+    //This creates the packages
     var tableRows = d3.select("#" + tableId)
         .selectAll("tr")
         .data(data)
@@ -229,9 +229,9 @@ function renderJsonTable(table) {
     //create all headers
     create_all_table_headers(table.domains);
 
-    //create rows
+    //create packages
     var row_data = [];
-    table.rows.forEach(function(row) {
+    table.packages.forEach(function(row) {
         create_table_rows(row);
         // console.log(row);
     });

@@ -5,57 +5,33 @@ Example 8 - New JSON
 --------------------------------------------------------------------------------------------------
  */
 
-var tableJSON2 = {
+var tableJSON = {
     "domains": [
         {
             "name": "explicit",
-            "elements": [
-                {
-                    "name": 0
-                },
-                {
-                    "name": 1
-                },
-                {
-                    "name": 2
-                },
-                {
-                    "name": 3
-                },
-                {
-                    "name": 4
-                },
-                {
-                    "name": 5
-                }
+            "subdomains": [
+                { "name": 0 },
+                { "name": 1 },
+                { "name": 2 },
+                { "name": 3 },
+                { "name": 4 },
+                { "name": 5 }
             ]
         },
         {
             "name": "implicit",
-            "elements": [
-                {
-                    "name": 0
-                },
-                {
-                    "name": 1
-                },
-                {
-                    "name": 2
-                },
-                {
-                    "name": 3
-                },
-                {
-                    "name": 4
-                },
-                {
-                    "name": 5
-                }
+            "subdomains": [
+                { "name": 0 },
+                { "name": 1 },
+                { "name": 2 },
+                { "name": 3 },
+                { "name": 4 },
+                { "name": 5 }
             ]
         },
         {
             "name": "permission granted",
-            "elements": [
+            "subdomains": [
                 {
                     "name": "Location",
                     //"image": "location.png"
@@ -72,7 +48,7 @@ var tableJSON2 = {
         },
         {
             "name": "permission usage",
-            "elements": [
+            "subdomains": [
                 {
                     "name": "Location",
                     //"image": "location.png"
@@ -90,80 +66,48 @@ var tableJSON2 = {
     ],
     "packages": [
         {
-            "name": "Messaging",
+            "package": "Messaging",
             "components": [
                 {
                     "name": "ListMsgs",
-                    "target_sdk": "1"
+                    "domain_data": [
+                        {
+                            "domain": "explicit_domain",
+                            "data": [0, 1, 0, 0, 0, 0]
+                        },
+                        {
+                            "domain": "implicit_domain",
+                            "data": [0, 0, 0, 0, 0, 0]
+                        },
+                        {
+                            "domain": "permission_granted_domain",
+                            "data": [0, 0, 1]
+                        },
+                        {
+                            "domain": "permission_usage_domain",
+                            "data": [0, 0, 1]
+                        }
+                    ]
                 },
                 {
                     "name": "Composer",
-                    "target_sdk": "1"
-                },
-                {
-                    "name": "Sender",
-                    "target_sdk": "1"
-                }
-            ]
-        }
-    ],
-    "rows": [
-        {
-            "package": "Messaging",
-            "component": "ListMsgs",
-            "domain_data": [
-                {
-                    "domain": "explicit_domain",
-                    "data": [
-                        0, 1, 0, 0, 0, 0
-                    ]
-                },
-                {
-                    "domain": "implicit_domain",
-                    "data": [
-                        0, 0, 0, 0, 0, 0
-                    ]
-                },
-                {
-                    "domain": "permission_granted_domain",
-                    "data": [
-                        0, 0, 1
-                    ]
-                },
-                {
-                    "domain": "permission_usage_domain",
-                    "data": [
-                        0, 0, 1
-                    ]
-                }
-            ]
-        },
-        {
-            "package": "Messaging",
-            "component": "Composer",
-            "domain_data": [
-                {
-                    "domain": "explicit_domain",
-                    "data": [
-                        1, 0, 0, 0, 0, 0
-                    ]
-                },
-                {
-                    "domain": "implicit_domain",
-                    "data": [
-                        0, 0, 1, 0, 0, 0
-                    ]
-                },
-                {
-                    "domain": "permission_granted_domain",
-                    "data": [
-                        0, 1, 0
-                    ]
-                },
-                {
-                    "domain": "permission_usage_domain",
-                    "data": [
-                        0, 0, 0
+                    "domain_data": [
+                        {
+                            "domain": "explicit_domain",
+                            "data": [1, 0, 0, 0, 0, 0]
+                        },
+                        {
+                            "domain": "implicit_domain",
+                            "data": [0, 0, 1, 0, 0, 0]
+                        },
+                        {
+                            "domain": "permission_granted_domain",
+                            "data": [0, 1, 0]
+                        },
+                        {
+                            "domain": "permission_usage_domain",
+                            "data": [0, 0, 0]
+                        }
                     ]
                 }
             ]
@@ -171,15 +115,15 @@ var tableJSON2 = {
     ]
 };
 
-function renderJsonTable2(table, div_id) {
+function renderJsonTable(table, div_id) {
     //create table
     create_table_structure(div_id);
 
     //create all headers
-    create_all_table_headers2(div_id, table);
+    create_all_table_headers(div_id, table);
 
-    //create rows
-    create_all_table_rows2(div_id, table);
+    //create packages
+    create_all_table_rows(div_id, table);
 }
 
 function create_table_structure(div_id) {
@@ -194,26 +138,29 @@ function create_table_structure(div_id) {
         .attr("id", div_id + "_tbody");
 }
 
-function create_all_table_rows2(div_id, table) {
-    var row_data = [];
-    var domain_data = [];
+function create_all_table_rows(div_id, table) {
+    var rows_data = [];
+    var grouped_domain_data = [];
 
-    table.rows.forEach(function(row) {
-        row.domain_data.forEach(function(domain) {
-            domain.data.forEach(function(data) {
-                domain_data.push(data);
+    table.packages.forEach(function(package) {
+        package.components.forEach(function(component) {
+            component.domain_data.forEach(function(domain_datum) {
+                domain_datum.data.forEach(function(data) {
+                    grouped_domain_data.push(data);
+                });
             });
+
+            rows_data.push(grouped_domain_data);
+            grouped_domain_data = [];
         });
-        row_data.push(domain_data);
-        domain_data = [];
     });
 
-    row_data.forEach(function(data) {
-        create_table_rows2(div_id, data);
+    rows_data.forEach(function(data) {
+        create_table_rows(div_id, data);
     });
 }
 
-function create_table_rows2(div_id, rows) {
+function create_table_rows(div_id, rows) {
     d3.select("#" + div_id + "_tbody")
         .append("tr")
         .selectAll("td")
@@ -224,7 +171,7 @@ function create_table_rows2(div_id, rows) {
 }
 
 //accepts an array of a domains and their subdomains
-function create_all_table_headers2(div_id, table) {
+function create_all_table_headers(div_id, table) {
     var sub_headers = [];
     var domain_names = [];
     var domain_headers = {};
@@ -234,10 +181,10 @@ function create_all_table_headers2(div_id, table) {
 
     table.domains.forEach(function(domain) {
         domain_names.push(domain.name);
-        domain_headers.colspan.push(domain.elements.length);
+        domain_headers.colspan.push(domain.subdomains.length);
 
         //create subheader array
-        domain.elements.forEach(function(element) {
+        domain.subdomains.forEach(function(element) {
             sub_headers.push(element.name);
         });
 
@@ -251,11 +198,11 @@ function create_all_table_headers2(div_id, table) {
     }
 
     domain_headers.domains = domain_names;
-    create_table_headers2(div_id, domain_headers);
-    create_table_sub_headers2(div_id, sub_headers);
+    create_table_headers(div_id, domain_headers);
+    create_table_sub_headers(div_id, sub_headers);
 }
 
-function create_table_sub_headers2(div_id, headers) {
+function create_table_sub_headers(div_id, headers) {
     d3.select("#" + div_id + "_thead")
         .append("tr")
         .selectAll("th")
@@ -265,7 +212,7 @@ function create_table_sub_headers2(div_id, headers) {
         .text( function(d) { return d; });
 }
 
-function create_table_headers2(div_id, headers) {
+function create_table_headers(div_id, headers) {
     d3.select("#" + div_id + "_thead")
         .append("tr")
         .selectAll("th")
@@ -276,7 +223,7 @@ function create_table_headers2(div_id, headers) {
         .text( function(d) { return d; });
 }
 
-renderJsonTable2(tableJSON2, "example8");
+renderJsonTable(tableJSON, "example8");
 
 /*
 Example 9 - Generating the JSON from the input files
@@ -285,7 +232,6 @@ Example 9 - Generating the JSON from the input files
 var tableJSON3 = {};
 tableJSON3.domains = [];
 tableJSON3.packages = [];
-tableJSON3.rows = [];
 
 d3.csv("deldroid-input/domain-explicit-communication-1.csv",
     function(error, data) {
@@ -309,13 +255,13 @@ function get_domain_from_file(filename) {
 
 function create_json_domains(data, domain) {
     var domain_object = {};
-    domain_object.elements = [];
+    domain_object.subdomains = [];
 
     domain_object.name = domain;
 
     data.columns.forEach(function(column) {
         if(column !== "Package" && column !== "Component" && column !== "ID") {
-            domain_object.elements.push(column);
+            domain_object.subdomains.push(column);
         }
     });
 
