@@ -191,7 +191,7 @@ function create_table_rows(div_id, rows) {
 
     //create side headers
     row.append("td")
-        .attr("rowspan", rows.components_count)
+        // .attr("rowspan", rows.components_count)
         .text(rows.package);
     row.append("td")
         .text(rows.component);
@@ -272,44 +272,75 @@ function create_domain_headers(div_id, headers) {
 renderJsonTable(tableJSON, "example8");
 
 /*
-Example 9 - Generating the JSON from the input files
+Example 10 - rendering analysis results (testing is json structure is good)
  */
 
-var tableJSON3 = {};
-tableJSON3.domains = [];
-tableJSON3.packages = [];
-
-d3.csv("deldroid-input/domain-explicit-communication-1.csv",
-    function(error, data) {
-        if (error) throw error;
-        console.log(data); // [{"Hello": "world"}, …]
-
-        var domain = get_domain_from_file("domain-explicit-communication-1.csv");
-        console.log(create_json_domains(data, domain));
-    });
-
-function get_domain_from_file(filename) {
-    var domain = "";
-    var filename_tokens = filename.split("-");
-
-    for(var i = 1; i<filename_tokens.length-1; i++) {
-        domain+=filename_tokens[i] + " ";
+var analysisJson = [
+    {
+        "attack_type": "privilege_escalation",
+        "attack_info": {
+            "malicious_dsmidx": 0,
+            "malicious_component": "LevelUp",
+            "vulnerable_dsmidx": 1,
+            "vulnerable_component": "Sender",
+            "resource_dsmidx": 6,
+            "resource": "SMS"
+        }
+    },
+    {
+        "attack_type": "intent_spoofing",
+        "attack_info": {
+            "malicious_dsmidx": 0,
+            "malicious_component": "LevelUp",
+            "vulnerable_dsmidx": 2,
+            "vulnerable_component": "Sender",
+            "resource_dsmidx": 6,
+            "resource": "SMS"
+        }
+    },
+    {
+        "attack_type": "unauthorized_intent_receipt",
+        "attack_info": {
+            "malicious_dsmidx": 0,
+            "malicious_component": "LevelUp",
+            "vulnerable_dsmidx": 3,
+            "vulnerable_component": "Sender",
+            "resource_dsmidx": 6,
+            "resource": "SMS"
+        }
     }
+];
 
-    return domain;
+function renderAnalysis() {
+    analysisJson.forEach(function(attack) {
+        renderAttack(attack);
+    });
 }
 
-function create_json_domains(data, domain) {
-    var domain_object = {};
-    domain_object.subdomains = [];
+$(document).ready(function(){
+    renderAnalysis();
+});
 
-    domain_object.name = domain;
+function renderAttack(attack) {
+    var coords = {};
 
-    data.columns.forEach(function(column) {
-        if(column !== "Package" && column !== "Component" && column !== "ID") {
-            domain_object.subdomains.push(column);
-        }
-    });
+    coords.row = attack.attack_info.malicious_dsmidx;
+    coords.column = attack.attack_info.vulnerable_dsmidx;
 
-    return domain_object;
+    var attack_type = attack.attack_type;
+    var attack_class = "";
+
+    if(attack_type === "privilege_escalation") {
+        attack_class = "red";
+    }
+    else if(attack_type === "intent_spoofing") {
+        attack_class = "blue";
+    }
+    else if(attack_class === "unauthorized_intent_receipt") {
+        attack_class = "green";
+    }
+
+    $(".row_" + coords.row + ".col_" + coords.column).addClass(attack_class);
+
+    console.log(coords.row);
 }

@@ -265,3 +265,44 @@ var tableJSON = {
         }
     ]
 };
+
+/*
+Analysis result JSON v1
+ */
+
+
+var analysisJson = [
+    {
+        "attack_type": "privilege_escalation",
+        "attack_info": {
+            "malicious_dsmidx": 0,
+            "malicious_component": "LevelUp",
+            "vulnerable_dsmidx": 4,
+            "vulnerable_component": "Sender",
+            "resource_dsmidx": 6,
+            "resource": "SMS"
+        }
+    }//,
+    // {
+    //     "attack_type": "intent_spoofing",
+    //     "attack_info": {
+    //         "malicious_dsmidx": 0,
+    //         "malicious_component": "LevelUp",
+    //         "vulnerable_dsmidx": 4,
+    //         "vulnerable_component": "Sender",
+    //         "resource_dsmidx": 6,
+    //         "resource": "SMS"
+    //     }
+    // },
+    // {
+    //     "attack_type": "unauthorized_intent_receipt",
+    //     "attack_info": {
+    //         "malicious_dsmidx": 0,
+    //         "malicious_component": "LevelUp",
+    //         "vulnerable_dsmidx": 4,
+    //         "vulnerable_component": "Sender",
+    //         "resource_dsmidx": 6,
+    //         "resource": "SMS"
+    //     }
+    // }
+];
