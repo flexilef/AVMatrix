@@ -196,26 +196,35 @@ function create_all_table_rows(div_id, table) {
 }
 
 function create_table_rows(div_id, rows, rowspan) {
+    const class_package =  "pkg-" + rows.package;
+    const class_component =  "cpn-" + rows.component;
+    const class_dsm_idx = "dsmidx-" + rows.component_dsm_idx;
+
+
     let row = d3.select("#" + div_id + "_tbody")
         .append("tr")
-        .classed(rows.package + "-" + rows.component, true);
+        .classed(class_package, true)
+        .classed(class_component, true)
+        .classed(class_dsm_idx, true);
 
     //create package headers. If rowspan is specified, add it, otherwise, skip creating it
     if(rowspan !== false) {
         row.append("td")
             .attr("rowspan", rowspan)
+            .classed(class_package, true)
             .text(rows.package);
     }
 
     //create component headers
     row.append("td")
+        .classed(class_component, true)
         .text(rows.component);
 
     //create ID header
     row.append("td")
         .text(rows.component_dsm_idx);
 
-    d3.select("tr." + rows.package + "-" + rows.component)
+    d3.select("tr." + class_package + "." + class_component)
         .selectAll("td.g") //g to create a new grouping? and prevent rebinding data to the first two td headers
         .data(rows.data)
         .enter()
