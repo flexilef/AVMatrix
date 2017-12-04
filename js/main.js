@@ -5,7 +5,7 @@ Example 8 - New JSON
 --------------------------------------------------------------------------------------------------
  */
 
-var tableJSON = {
+let tableJSON = {
     "domains": [
         {
             "name": " ",
@@ -77,6 +77,7 @@ var tableJSON = {
                 {
                     "component": "ListMsgs",
                     "dsm_idx": 2,
+                    "type": "activity",
                     "domain_data": [
                         {
                             "domain": "explicit_domain",
@@ -99,6 +100,7 @@ var tableJSON = {
                 {
                     "component": "Composer",
                     "dsm_idx": 3,
+                    "type": "activity",
                     "domain_data": [
                         {
                             "domain": "explicit_domain",
@@ -122,6 +124,11 @@ var tableJSON = {
         }
     ]
 };
+
+$(document).ready(function(){
+    renderJsonTable(tableJSON, "example8");
+    render_analysis();
+});
 
 function renderJsonTable(table, div_id) {
     //create table
@@ -147,8 +154,8 @@ function create_table_structure(div_id) {
 }
 
 function create_all_table_rows(div_id, table) {
-    var rows_data = [];
-    var grouped_domain_data = [];
+    let rows_data = [];
+    let grouped_domain_data = [];
 
     //prepare rows data
     table.packages.forEach(function(package) {
@@ -159,14 +166,13 @@ function create_all_table_rows(div_id, table) {
                 });
             });
 
-
-            var data = {
+            let data = {
                 "package": package.package,
                 "component": component.component,
                 "component_dsm_idx": component.dsm_idx,
                 "components_count": package.components.length,
                 "data": grouped_domain_data
-            }
+            };
 
             rows_data.push(data);
 
@@ -174,24 +180,38 @@ function create_all_table_rows(div_id, table) {
         });
     });
 
+    let old_package;
     rows_data.forEach(function(data) {
-        create_table_rows(div_id, data);
+
+        if(data.package !== old_package) {
+            create_table_rows(div_id, data, data.components_count);
+        }
+        else {
+            //1 rowspan because we already set the rowspan
+            create_table_rows(div_id, data, false);
+        }
+
+        old_package = data.package;
     });
 }
 
-function create_table_rows(div_id, rows) {
-    var row = d3.select("#" + div_id + "_tbody")
+function create_table_rows(div_id, rows, rowspan) {
+    let row = d3.select("#" + div_id + "_tbody")
         .append("tr")
         .classed(rows.package + "-" + rows.component, true);
 
-    //create side headers
-    row.append("td")
-        // .attr("rowspan", rows.components_count)
-        .text(rows.package);
+    //create package headers. If rowspan is specified, add it, otherwise, skip creating it
+    if(rowspan !== false) {
+        row.append("td")
+            .attr("rowspan", rowspan)
+            .text(rows.package);
+    }
+
+    //create component headers
     row.append("td")
         .text(rows.component);
 
-    //populate ID header
+    //create ID header
     row.append("td")
         .text(rows.component_dsm_idx);
 
@@ -204,10 +224,10 @@ function create_table_rows(div_id, rows) {
 }
 
 function create_all_table_headers(div_id, table) {
-    var domain_headers = {
-        "domains": [ "", ""],
-        "subdomains": [ "Packages", "Components" ],
-        "colspan": [ 1, 1 ]
+    let domain_headers = {
+        "domains": ["", ""],
+        "subdomains": ["Packages", "Components"],
+        "colspan": [1, 1]
     };
 
     //prepare all domain header arrays
@@ -268,8 +288,6 @@ function create_domain_headers(div_id, headers) {
     create_domain_subheaders(div_id, headers.subdomains);
 }
 
-renderJsonTable(tableJSON, "example8");
-
 /*
 Example 10 - rendering analysis results (testing is json structure is good)
  */
@@ -316,18 +334,14 @@ function render_analysis() {
     });
 }
 
-$(document).ready(function(){
-    render_analysis();
-});
-
 function render_attack(attack) {
-    var coords = {};
+    let coords = {};
 
     coords.row = attack.attack_info.malicious_dsmidx;
     coords.column = attack.attack_info.vulnerable_dsmidx;
 
-    var attack_type = attack.attack_type;
-    var attack_class = "";
+    let attack_type = attack.attack_type;
+    let attack_class = "";
 
     if(attack_type === "privilege_escalation") {
         attack_class = "red";
