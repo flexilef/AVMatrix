@@ -59,8 +59,12 @@
         <h2>Example 8 - Updated JSON for entire table render</h2>
         <form class="app-input">
             <div>
+                <label for="analysis-input">Provide analysis data: </label>
+                <input type="file" id="analysis-file" onchange="addAnalysisResults(event)">
+            </div>
+            <div>
                 <label for="app-input">Choose app to visualize: </label>
-                <input  type="file" id="app-file">
+                <input  type="file" id="app-file" multiple onchange="addAppFiles(event)">
             </div>
             <div>
                 <button type="submit" class="btn btn-outline-primary btn-sm">Visualize</button>

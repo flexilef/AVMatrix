@@ -115,6 +115,302 @@ var tableJSON = {
     ]
 };
 
+var input = document.querySelector('input');
+var selectedApps = {
+    "domains": [
+        {
+            "name": "explicit",
+            "subdomains": []
+        },
+        {
+            "name": "implicit",
+            "subdomains": []
+        },
+        {
+            "name": "permission granted",
+            "subdomains": [
+                {
+                    "name": "Location",
+                    //"image": "location.png"
+                },
+                {
+                    "name": "SMS",
+                    //"image": "sms.png"
+                },
+                {
+                    "name": "Bluetooth",
+                    //"image": "bluetooth.png"
+                }
+            ]
+        },
+        {
+            "name": "permission usage",
+            "subdomains": [
+                {
+                    "name": "Location",
+                    //"image": "location.png"
+                },
+                {
+                    "name": "SMS",
+                    //"image": "sms.png"
+                },
+                {
+                    "name": "Bluetooth",
+                    //"image": "bluetooth.png"
+                }
+            ]
+        }
+    ],
+    "packages": []
+}
+
+// get data from csv files.
+let domainExplicitCSV = d3.csv("deldroid-input2/domain-explicit-communication-5.csv",
+    function(error, data) {
+        if (error) throw error;
+        console.log(data);
+
+        let domain = get_domain_from_file("domain-explicit-communication-5.csv");
+        console.log(create_json_domains(data, domain));
+        let csv_data = create_json_domains(data, domain);
+        return csv_data;
+        
+    });
+
+let domainImplicitCSV = d3.csv("deldroid-input2/domain-implicit-communication-5.csv",
+    function(error, data) {
+        if (error) throw error;
+        console.log(data);
+
+        let domain = get_domain_from_file("domain-implicit-communication-5.csv");
+        console.log(create_json_domains(data, domain));
+        let csv_data = create_json_domains(data, domain);
+        return csv_data;
+        
+    });
+
+let permissionEnforcementCSV = d3.csv("deldroid-input2/domain-permission-enforcement-5.csv",
+    function(error, data) {
+        if (error) throw error;
+        console.log(data); // [{"Hello": "world"}, …]
+
+        let domain = get_domain_from_file("domain-permission-enforcement-5.csv");
+        console.log(create_json_domains(data, domain));
+        let csv_data = create_json_domains(data, domain);
+        return csv_data;
+    });
+
+let permissionGrantedCSV = d3.csv("deldroid-input2/domain-permission-granted-5.csv",
+    function(error, data) {
+        if (error) throw error;
+        console.log(data); // [{"Hello": "world"}, …]
+
+        let domain = get_domain_from_file("domain-permission-granted-5.csv");
+        console.log(create_json_domains(data, domain));
+        let csv_data = create_json_domains(data, domain);
+        return csv_data;
+    });
+
+let permissionUsageCSV = d3.csv("deldroid-input2/domain-permission-usage-5.csv",
+    function(error, data) {
+        if (error) throw error;
+        console.log(data); // [{"Hello": "world"}, …]
+
+        let domain = get_domain_from_file("domain-permission-usage-5.csv");
+        console.log(create_json_domains(data, domain));
+        let csv_data = create_json_domains(data, domain);
+        return csv_data;
+    });
+
+// build xml text string from analysis results.
+analysisResults = ''
+
+let apps = [] 
+let numAppsProcessed = 0;
+let components = []     // each value is an array consisting of the app name followed by the components in that app. 
+                        // ex. [['Messaging', 'ListMsgs', 'Composer', 'Sender'], ['FunGame', 'Main', 'LevelUp']]
+let attacks = []        // 'p' = privilege escalation
+                        // 'u' = unauthorized intent receipt
+                        // 'i' = intent spoofing
+                        // [attack type, attacker component name, victim component name, resource]
+                        // ex. [['p', 'ListMsgs', 'Composer', 'SMS'], ['e', 'Composer', 'Sender', 'LOCATION']...]
+
+function addAnalysisResults(event) {
+    // add analysis sheet.
+    let reader = new FileReader();
+    reader.readAsText(event.target.files[0]);
+    reader.onload = function(theFile) {
+        analysisResults = theFile.target.result;
+    }
+}
+
+function addAppFiles(event) {
+    // add user's selected apps to apps list.
+    let numApps = event.target.files.length;
+    for (var i = 0; i < event.target.files.length; i++) {
+        let reader = new FileReader();
+        reader.readAsText(event.target.files[i]);
+        reader.onload = function(theFile) {
+            apps.push(theFile.target.result);
+            numAppsProcessed++
+            if (numAppsProcessed === numApps) {
+                addComponents();
+            }
+        };
+    }
+}
+
+function addComponents(appsToParse) {
+    // apps is an array of xml strings, with each array item representing one xml file.
+    let parser = new DOMParser();
+    
+    for (var i = 0; i < apps.length; i++) {
+        let item = [];
+        let xmlDoc = parser.parseFromString(apps[i], "text/xml");
+        // first add the app's name.
+        let name = xmlDoc.getElementsByTagName("name");
+        item.push(name[0].textContent);
+        // then add the components for that app.
+        comps = [];
+        comps = xmlDoc.getElementsByTagName("components");
+        console.log(comps);
+
+        for (var j = 0; j < comps[0].childNodes.length; j++) {
+            if (comps[0].childNodes[j].nodeName === 'component') {
+                item.push(comps[0].childNodes[j].childNodes[7].textContent);
+            }
+        }
+        // add the app's components to the total list of components.
+        components.push(item);
+    }
+    addAttacks(components);
+}
+
+function addAttacks(componentsList) {
+    // add all applicable attacks. these are the ones where the attacker and victim are both in the components list built from the user's selected apps.
+    let parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(analysisResults, "text/xml");
+    // build list of all possible privilege escalation attacks.
+    let privilegeAttackInstances = [];
+    let privilegeAttacks = [];
+    privilegeAttackInstances = xmlDoc.getElementsByTagName("privilegeEscalationInstance");
+
+    for (var i = 0; i < privilegeAttackInstances.length; i++) {
+        let attacker = privilegeAttackInstances[i].childNodes[3].textContent;
+        let victim = privilegeAttackInstances[i].childNodes[11].textContent;
+        privilegeAttacks.push(['p', attacker, victim]);
+    }
+
+    // build list of all possible unauthorized intent receipt attacks.
+    let unauthAttackInstances = [];
+    let unauthAttacks = [];
+    unauthAttackInstances = xmlDoc.getElementsByTagName("intentSpoofingInstance");
+    
+    for (var i = 0; i < unauthAttackInstances.length; i++) {
+        let attacker = unauthAttackInstances[i].childNodes[3].textContent;
+        let victim = unauthAttackInstances[i].childNodes[11].textContent;
+        unauthAttacks.push(['u', attacker, victim]);
+    }
+
+    // build list of all possible intent spoofing attacks.
+    let spoofAttackInstances = [];
+    let spoofAttacks = [];
+    spoofAttackInstances = xmlDoc.getElementsByTagName("unauthorizedIntentReceiptInstance");
+    
+    for (var i = 0; i < spoofAttackInstances.length; i++) {
+        let attacker = spoofAttackInstances[i].childNodes[3].textContent;
+        let victim = spoofAttackInstances[i].childNodes[11].textContent;
+        spoofAttacks.push(['s', attacker, victim]);
+    }
+    console.log('all attacks');
+    console.log(privilegeAttacks);
+    console.log(unauthAttacks);
+    console.log(spoofAttacks);
+
+    // go through all of the possible attacks, and see if any of the attacks apply.
+    // first do this for privilege attacks.
+    for (var i = 0; i < privilegeAttacks.length; i++) {
+        // check if both the attacker and the victim of the attack exist in the user's components list.
+        // check all of the components in each component item.
+        // first check if the attacker exists.
+        for (var j = 0; j < components.length; j++) {
+            if (components[j].includes(privilegeAttacks[i][1])) {
+                // if it does, then check if the victim exists.
+                for (var k = 0; k < components.length; k++) {
+                    if (components[k].includes(privilegeAttacks[i][2])) {
+                        // if both exist, then add to list of attacks.
+                        attacks.push(privilegeAttacks[i]);
+                    }
+                }
+                attacks.push(privilegeAttacks[i]);
+            }
+        }
+    }
+
+    // repeat for unauthorized intent receipt and spoofing attacks.
+    for (var i = 0; i < unauthAttacks.length; i++) {
+        // check if both the attacker and the victim of the attack exist in the user's components list.
+        // check all of the components in each component item.
+        // first check if the attacker exists.
+        for (var j = 0; j < components.length; j++) {
+            if (components[j].includes(unauthAttacks[i][1])) {
+                // if it does, then check if the victim exists.
+                for (var k = 0; k < components.length; k++) {
+                    if (components[k].includes(unauthAttacks[i][2])) {
+                        // if both exist, then add to list of attacks.
+                        attacks.push(unauthAttacks[i]);
+                    }
+                }
+                attacks.push(unauthAttacks[i]);
+            }
+        }
+    }
+
+    for (var i = 0; i < spoofAttacks.length; i++) {
+        // check if both the attacker and the victim of the attack exist in the user's components list.
+        // check all of the components in each component item.
+        // first check if the attacker exists.
+        for (var j = 0; j < components.length; j++) {
+            if (components[j].includes(spoofAttacks[i][1])) {
+                // if it does, then check if the victim exists.
+                for (var k = 0; k < components.length; k++) {
+                    if (components[k].includes(spoofAttacks[i][2])) {
+                        // if both exist, then add to list of attacks.
+                        attacks.push(spoofAttacks[i]);
+                    }
+                }
+                attacks.push(spoofAttacks[i]);
+            }
+        }
+    }
+
+    console.log('all attacks so far without dupes: ');
+    // remove duplicate attacks.
+    attacks = attacks.filter(function(elem, index, self) {
+        return index === self.indexOf(elem);
+    })
+    console.log(attacks);
+    console.log('components list');
+    console.log(components);
+    
+}
+
+function updateAppsToVisualize(event) {
+    selectedApps = []
+    console.log(event.target.files);
+    console.log('asdfasf');
+    console.log(apps.length);
+    for (var i = 0; i < apps.length; i++) {
+        let reader = new FileReader();
+        reader.onload = (function(file) {
+            let appData = reader.result;
+            selectedApps.push(appData);
+            console.log(appData);
+        })
+    }
+    return selectedApps
+}
+
 function renderJsonTable(table, div_id) {
     //create table
     create_table_structure(div_id);
@@ -270,8 +566,10 @@ d3.csv("deldroid-input/domain-explicit-communication-1.csv",
         if (error) throw error;
         console.log(data); // [{"Hello": "world"}, …]
 
-        var domain = get_domain_from_file("domain-explicit-communication-1.csv");
+        let domain = get_domain_from_file("domain-explicit-communication-1.csv");
         console.log(create_json_domains(data, domain));
+        let csv_data = create_json_domains(data, domain);
+        return csv_data;
     });
 
 function get_domain_from_file(filename) {
