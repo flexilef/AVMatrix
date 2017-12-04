@@ -76,11 +76,8 @@ var tableJSON = {
             "components": [
                 {
                     "component": "ListMsgs",
+                    "dsm_idx": 2,
                     "domain_data": [
-                        {
-                            "domain": " ",
-                            "data": [0]
-                        },
                         {
                             "domain": "explicit_domain",
                             "data": [0, 1, 0, 0, 0, 0]
@@ -101,11 +98,8 @@ var tableJSON = {
                 },
                 {
                     "component": "Composer",
+                    "dsm_idx": 3,
                     "domain_data": [
-                        {
-                            "domain": " ",
-                            "data": [1]
-                        },
                         {
                             "domain": "explicit_domain",
                             "data": [1, 0, 0, 0, 0, 0]
@@ -169,6 +163,7 @@ function create_all_table_rows(div_id, table) {
             var data = {
                 "package": package.package,
                 "component": component.component,
+                "component_dsm_idx": component.dsm_idx,
                 "components_count": package.components.length,
                 "data": grouped_domain_data
             }
@@ -195,6 +190,10 @@ function create_table_rows(div_id, rows) {
         .text(rows.package);
     row.append("td")
         .text(rows.component);
+
+    //populate ID header
+    row.append("td")
+        .text(rows.component_dsm_idx);
 
     d3.select("tr." + rows.package + "-" + rows.component)
         .selectAll("td.g") //g to create a new grouping? and prevent rebinding data to the first two td headers
@@ -294,8 +293,8 @@ var analysisJson = [
             "malicious_component": "LevelUp",
             "vulnerable_dsmidx": 2,
             "vulnerable_component": "Sender",
-            "resource_dsmidx": 6,
-            "resource": "SMS"
+            "pot_dsmidx": 6,
+            "pot_component": "SMS"
         }
     },
     {
@@ -305,23 +304,23 @@ var analysisJson = [
             "malicious_component": "LevelUp",
             "vulnerable_dsmidx": 3,
             "vulnerable_component": "Sender",
-            "resource_dsmidx": 6,
-            "resource": "SMS"
+            "pot_dsmidx": 6,
+            "pot_component": "SMS"
         }
     }
 ];
 
-function renderAnalysis() {
+function render_analysis() {
     analysisJson.forEach(function(attack) {
-        renderAttack(attack);
+        render_attack(attack);
     });
 }
 
 $(document).ready(function(){
-    renderAnalysis();
+    render_analysis();
 });
 
-function renderAttack(attack) {
+function render_attack(attack) {
     var coords = {};
 
     coords.row = attack.attack_info.malicious_dsmidx;
