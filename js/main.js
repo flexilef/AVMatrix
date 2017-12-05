@@ -126,9 +126,44 @@ let tableJSON = {
     ]
 };
 
-$(document).ready(function(){
+$(document).ready( function(){
     renderJsonTable(tableJSON, "example8");
     render_analysis();
+
+    //attach popover info to table cells
+    tableJSON.packages.forEach( function(the_package) {
+        //attach popover info to package cells
+        let $package_cell = $("tr td.pkg-" + the_package.package);
+
+        $package_cell.attr("data-toggle", "popover");
+        //adding data-container this seems to allow you to click on the popover to dismiss it
+        $package_cell.attr("data-container", "tr td.pkg-" + the_package.package);
+        $package_cell.attr("data-trigger", "click");
+        $package_cell.attr("data-placement", "auto");
+        $package_cell.attr("data-html", "true");
+        $package_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+        $package_cell.attr("data-title", the_package.package);
+        $package_cell.attr("data-content", "Some info that we can parse out and include in the JSON later");
+
+
+        the_package.components.forEach( function(component) {
+            let $component_cell = $("tr td.cpn-" + component.component);
+
+            $component_cell.attr("data-toggle", "popover");
+            $component_cell.attr("data-container", "tr td.cpn-" + component.component);
+            $component_cell.attr("data-trigger", "click");
+            $component_cell.attr("data-placement", "auto");
+            $component_cell.attr("data-html", "true");
+            $component_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+            $component_cell.attr("data-title", component.component);
+            $component_cell.attr("data-content", "<p>Type: " + component.type + "</p>" + "<p>Extra: Some extra info</p>");
+        });
+    });
+
+
+
+    //initializes all popovers
+    $('[data-toggle="popover"]').popover();
 });
 
 function renderJsonTable(table, div_id) {
