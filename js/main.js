@@ -37,7 +37,7 @@ let tableJSON = {
             ]
         },
         {
-            "name": "permission granted",
+            "name": "permission_granted",
             "subdomains": [
                 {
                     "name": "Location",
@@ -54,7 +54,7 @@ let tableJSON = {
             ]
         },
         {
-            "name": "permission usage",
+            "name": "permission_usage",
             "subdomains": [
                 {
                     "name": "Location",
@@ -89,11 +89,11 @@ let tableJSON = {
                             "data": [0, 0, 0, 0, 0, 0]
                         },
                         {
-                            "domain": "permission granted",
+                            "domain": "permission_granted",
                             "data": [0, 0, 1]
                         },
                         {
-                            "domain": "permission usage",
+                            "domain": "permission_usage",
                             "data": [0, 0, 1]
                         }
                     ]
@@ -104,19 +104,19 @@ let tableJSON = {
                     "type": "activity",
                     "domain_data": [
                         {
-                            "domain": "explicit_domain",
+                            "domain": "explicit",
                             "data": [1, 0, 0, 0, 0, 0]
                         },
                         {
-                            "domain": "implicit_domain",
+                            "domain": "implicit",
                             "data": [0, 0, 1, 0, 0, 0]
                         },
                         {
-                            "domain": "permission_granted_domain",
+                            "domain": "permission_granted",
                             "data": [0, 1, 0]
                         },
                         {
-                            "domain": "permission_usage_domain",
+                            "domain": "permission_usage",
                             "data": [0, 0, 0]
                         }
                     ]
@@ -157,16 +157,24 @@ function create_table_structure(div_id) {
 function create_all_table_rows(div_id, table) {
     let rows_data = [];
     let grouped_domain_data = [];
-    let grouped_domain_dsmids = []; //maps each element in grouped_domain_data with their respective column header
+    let domain_dsm_ids = [];
 
     //prepare rows data
     table.packages.forEach(function(the_package) {
         the_package.components.forEach(function(component) {
             component.domain_data.forEach(function(domain_datum) {
 
+                //maps each element in grouped_domain_data with their respective column header
+                table.domains.forEach(function(domain) {
+                    if(domain.name === domain_datum.domain) {
+                        domain.subdomains.forEach(function(subdomain) {
+                            domain_dsm_ids.push(domain.name + "-" + subdomain.name);
+                        });
+                    }
+                });
+
                 domain_datum.data.forEach(function(data, index) {
                     grouped_domain_data.push(data);
-                    grouped_domain_dsmids.push(index)
                 });
             });
 
@@ -176,12 +184,13 @@ function create_all_table_rows(div_id, table) {
                 "component_dsm_idx": component.dsm_idx,
                 "components_count": the_package.components.length,
                 "data": grouped_domain_data,
-                "data_dsmids": grouped_domain_dsmids
+                "data_dsmids": domain_dsm_ids
             };
 
             rows_data.push(data);
 
             grouped_domain_data = [];
+            domain_dsm_ids = [];
         });
     });
 
@@ -203,7 +212,7 @@ function create_all_table_rows(div_id, table) {
 function create_table_rows(div_id, rows, rowspan) {
     const class_package =  "pkg-" + rows.package;
     const class_component =  "cpn-" + rows.component;
-    const class_dsm_idx = "dsmidx-" + rows.component_dsm_idx;
+    const class_dsm_idx = rows.component_dsm_idx;
 
     let row = d3.select("#" + div_id + "_tbody")
         .append("tr")
@@ -235,7 +244,7 @@ function create_table_rows(div_id, rows, rowspan) {
         .enter()
         .append("td")
         .attr("class", function(d, i) {
-            return "col_dsmidx-" + rows.data_dsmids[i];
+            return "col_" + rows.data_dsmids[i];
         })
         .classed("row_" + class_dsm_idx, true)
         .text( function(d) { return d; })
