@@ -157,7 +157,7 @@ function create_table_structure(div_id) {
 function create_all_table_rows(div_id, table) {
     let rows_data = [];
     let grouped_domain_data = [];
-    let domain_dsm_ids = [];
+    let domain_classes = [];
 
     //prepare rows data
     table.packages.forEach(function(the_package) {
@@ -168,12 +168,12 @@ function create_all_table_rows(div_id, table) {
                 table.domains.forEach(function(domain) {
                     if(domain.name === domain_datum.domain) {
                         domain.subdomains.forEach(function(subdomain) {
-                            domain_dsm_ids.push(domain.name + "-" + subdomain.name);
+                            domain_classes.push(domain.name + "-" + subdomain.name);
                         });
                     }
                 });
 
-                domain_datum.data.forEach(function(data, index) {
+                domain_datum.data.forEach(function(data) {
                     grouped_domain_data.push(data);
                 });
             });
@@ -184,13 +184,13 @@ function create_all_table_rows(div_id, table) {
                 "component_dsm_idx": component.dsm_idx,
                 "components_count": the_package.components.length,
                 "data": grouped_domain_data,
-                "data_dsmids": domain_dsm_ids
+                "domain_classes": domain_classes
             };
 
             rows_data.push(data);
 
             grouped_domain_data = [];
-            domain_dsm_ids = [];
+            domain_classes = [];
         });
     });
 
@@ -212,7 +212,7 @@ function create_all_table_rows(div_id, table) {
 function create_table_rows(div_id, rows, rowspan) {
     const class_package =  "pkg-" + rows.package;
     const class_component =  "cpn-" + rows.component;
-    const class_dsm_idx = rows.component_dsm_idx;
+    const class_dsm_idx = "dsmidx-" + rows.component_dsm_idx;
 
     let row = d3.select("#" + div_id + "_tbody")
         .append("tr")
@@ -244,9 +244,9 @@ function create_table_rows(div_id, rows, rowspan) {
         .enter()
         .append("td")
         .attr("class", function(d, i) {
-            return "col_" + rows.data_dsmids[i];
+            return "col_" + rows.domain_classes[i];
         })
-        .classed("row_" + class_dsm_idx, true)
+        .classed("row_" + rows.component_dsm_idx, true)
         .text( function(d) { return d; })
 }
 
@@ -323,7 +323,7 @@ var analysisJson = [
     {
         "attack_type": "privilege_escalation",
         "attack_info": {
-            "malicious_dsmidx": 0,
+            "malicious_dsmidx": 2,
             "malicious_component": "LevelUp",
             "vulnerable_dsmidx": 1,
             "vulnerable_component": "Sender",
@@ -334,9 +334,9 @@ var analysisJson = [
     {
         "attack_type": "intent_spoofing",
         "attack_info": {
-            "malicious_dsmidx": 0,
+            "malicious_dsmidx": 3,
             "malicious_component": "LevelUp",
-            "vulnerable_dsmidx": 2,
+            "vulnerable_dsmidx": 0,
             "vulnerable_component": "Sender",
             "pot_dsmidx": 6,
             "pot_component": "SMS"
@@ -380,7 +380,17 @@ function render_attack(attack) {
         attack_class = "green";
     }
 
-    $(".row_" + coords.row + ".col_" + coords.column).addClass(attack_class);
+    //add checks that the table cell is a 1 other wise don't render the attack
+    let table_cell_implicit = $("td.row_" + coords.row + ".col_implicit-" + coords.column);
+    let table_cell_explicit = $("td.row_" + coords.row + ".col_explicit-" + coords.column);
+
+    if(table_cell_implicit.html() === "1") {
+        table_cell_implicit.addClass(attack_class);
+    }
+
+    if(table_cell_explicit.html() === "1") {
+        table_cell_explicit.addClass(attack_class);
+    }
 
     console.log(coords.row);
 }
