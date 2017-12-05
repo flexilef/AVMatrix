@@ -16,6 +16,7 @@ let tableJSON = {
         {
             "name": "explicit",
             "subdomains": [
+                //each of these are dsmx
                 { "name": 0 },
                 { "name": 1 },
                 { "name": 2 },
@@ -80,19 +81,19 @@ let tableJSON = {
                     "type": "activity",
                     "domain_data": [
                         {
-                            "domain": "explicit_domain",
+                            "domain": "explicit",
                             "data": [0, 1, 0, 0, 0, 0]
                         },
                         {
-                            "domain": "implicit_domain",
+                            "domain": "implicit",
                             "data": [0, 0, 0, 0, 0, 0]
                         },
                         {
-                            "domain": "permission_granted_domain",
+                            "domain": "permission granted",
                             "data": [0, 0, 1]
                         },
                         {
-                            "domain": "permission_usage_domain",
+                            "domain": "permission usage",
                             "data": [0, 0, 1]
                         }
                     ]
@@ -156,22 +157,26 @@ function create_table_structure(div_id) {
 function create_all_table_rows(div_id, table) {
     let rows_data = [];
     let grouped_domain_data = [];
+    let grouped_domain_dsmids = []; //maps each element in grouped_domain_data with their respective column header
 
     //prepare rows data
-    table.packages.forEach(function(package) {
-        package.components.forEach(function(component) {
+    table.packages.forEach(function(the_package) {
+        the_package.components.forEach(function(component) {
             component.domain_data.forEach(function(domain_datum) {
-                domain_datum.data.forEach(function(data) {
+
+                domain_datum.data.forEach(function(data, index) {
                     grouped_domain_data.push(data);
+                    grouped_domain_dsmids.push(index)
                 });
             });
 
             let data = {
-                "package": package.package,
+                "package": the_package.package,
                 "component": component.component,
                 "component_dsm_idx": component.dsm_idx,
-                "components_count": package.components.length,
-                "data": grouped_domain_data
+                "components_count": the_package.components.length,
+                "data": grouped_domain_data,
+                "data_dsmids": grouped_domain_dsmids
             };
 
             rows_data.push(data);
@@ -200,7 +205,6 @@ function create_table_rows(div_id, rows, rowspan) {
     const class_component =  "cpn-" + rows.component;
     const class_dsm_idx = "dsmidx-" + rows.component_dsm_idx;
 
-
     let row = d3.select("#" + div_id + "_tbody")
         .append("tr")
         .classed(class_package, true)
@@ -224,11 +228,16 @@ function create_table_rows(div_id, rows, rowspan) {
     row.append("td")
         .text(rows.component_dsm_idx);
 
+    //populate domain data
     d3.select("tr." + class_package + "." + class_component)
         .selectAll("td.g") //g to create a new grouping? and prevent rebinding data to the first two td headers
         .data(rows.data)
         .enter()
         .append("td")
+        .attr("class", function(d, i) {
+            return "col_dsmidx-" + rows.data_dsmids[i];
+        })
+        .classed("row_" + class_dsm_idx, true)
         .text( function(d) { return d; })
 }
 
