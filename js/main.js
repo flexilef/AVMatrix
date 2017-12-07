@@ -410,15 +410,15 @@ let tableJSON = {
                         },
                         {
                             "domain": "permission granted",
-                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]//34
+                            "data": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]//34
                         },
                         {
                             "domain": "permission usage",
-                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //38
+                            "data": [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //38
                         },
                         {
                             "domain": "permission enforcement",
-                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //38
+                            "data": [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //38
                         }
                     ]
                 },
@@ -437,15 +437,15 @@ let tableJSON = {
                         },
                         {
                             "domain": "permission granted",
-                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                         },
                         {
                             "domain": "permission usage",
-                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                         },
                         {
                             "domain": "permission enforcement",
-                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                         }
                     ]
                 }
@@ -492,8 +492,22 @@ let attackJson = [
 
 $(document).ready( function(){
     renderJsonTable(tableJSON, "example8");
+
     render_analysis();
 
+    add_all_popovers();
+});
+
+function add_all_popovers() {
+    add_package_popovers();
+    add_attack_popovers();
+    add_permission_popovers();
+
+    //initializes all popovers
+    $('[data-toggle="popover"]').popover();
+}
+
+function add_package_popovers() {
     //attach popover info to table cells
     tableJSON.packages.forEach( function(the_package) {
         //attach popover info to package cells
@@ -525,8 +539,9 @@ $(document).ready( function(){
             $component_cell.attr("data-content", "<p>Type: " + component.type + "</p>" + "<p>Extra: Some extra info</p>");
         });
     });
+}
 
-    //attach popover info to attack cells
+function add_attack_popovers() {
     let css_attack_cells = "tr td[data-attack='true'";
     let $attack_cells = $(css_attack_cells);
 
@@ -541,19 +556,13 @@ $(document).ready( function(){
         //get attack info
         attackJson.forEach(function(attack) {
             if(attack.attack_type === attack_type) {
-                // console.log(victim_dsmidx);
-
                 if(attack.attack_info.malicious_dsmidx.toString() === attacker_dsmidx &&
                     attack.attack_info.vulnerable_dsmidx.toString() === victim_dsmidx) {
                     attack_info.attacker = attack.attack_info.malicious_component;
                     attack_info.victim = attack.attack_info.vulnerable_component;
-
-                    console.log(attack_info.attacker);
                 }
             }
         });
-
-        // console.log(attack_type);
 
         $(this).attr("data-toggle", "popover");
         $(this).attr("data-trigger", "click");
@@ -563,10 +572,67 @@ $(document).ready( function(){
         $(this).attr("data-title", attack_type);
         $(this).attr("data-content", "<p>Attacker: " + attack_info.attacker + "</p>" + "<p>Victim: " + attack_info.victim + "</p>");
     });
+}
 
-    //initializes all popovers
-    $('[data-toggle="popover"]').popover();
-});
+function add_permission_popovers() {
+    let css_permission_cells = "tr td[data-col^='permission-'";
+    let $permission_cells = $(css_permission_cells);
+
+    $permission_cells.each(function() {
+        let component_dsmidx = $(this).attr("data-row").split("_").pop().split("-").pop();
+        let permission_type = $(this).attr("data-col");
+        let permissions = [];
+        let popover_content = "";
+        // console.log(component_dsmidx);
+
+        //get the permission/subdomain indices so we can iterate through the tableJSON later
+        tableJSON.packages.forEach(function(the_package) {
+            the_package.components.forEach(function(component) {
+                if(component.dsm_idx.toString() === component_dsmidx) {
+                    component.domain_data.forEach(function (domain_datum) {
+                        if (domain_datum.domain.replace(/\s/g, "-") === permission_type) {
+                            domain_datum.data.forEach(function (data, index) {
+                                if (data === 1) {
+                                    let permission = {};
+                                    //the index of the subdomain in the tableJSON that contains the name of the permission
+                                    permission.indices = [];
+
+                                    permission.type = domain_datum.domain;
+                                    permission.indices.push(index);
+
+                                    permissions.push(permission);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        //iterate through each permission to find its subdomain name
+        permissions.forEach(function(permission) {
+            permission.indices.forEach(function(permission_index) {
+                tableJSON.domains.forEach(function(domain) {
+                    if(domain.name === permission.type) {
+                        let permission_name = domain.subdomains[permission_index].name;
+
+                        popover_content+="<p>" + permission_name + "</p>";
+                        console.log(popover_content);
+                    }
+                });
+            });
+        });
+
+        $(this).attr("data-toggle", "popover");
+        $(this).attr("data-trigger", "click");
+        $(this).attr("data-placement", "auto");
+        $(this).attr("data-html", "true");
+        $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+        $(this).attr("data-title", permission_type);
+        $(this).attr("data-content", popover_content);
+
+    });
+}
 
 function renderJsonTable(table, div_id) {
     //create table
