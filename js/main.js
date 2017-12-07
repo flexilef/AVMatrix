@@ -33,16 +33,115 @@ var tableJSON = {
             "name": "permission granted",
             "subdomains": [
                 {
-                    "name": "Location",
-                    //"image": "location.png"
+                    "name": "Contacts",
                 },
                 {
                     "name": "SMS",
-                    //"image": "sms.png"
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
                 },
                 {
                     "name": "Bluetooth",
-                    //"image": "bluetooth.png"
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
                 }
             ]
         },
@@ -50,19 +149,234 @@ var tableJSON = {
             "name": "permission usage",
             "subdomains": [
                 {
-                    "name": "Location",
-                    //"image": "location.png"
+                    "name": "Contacts",
                 },
                 {
                     "name": "SMS",
-                    //"image": "sms.png"
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
                 },
                 {
                     "name": "Bluetooth",
-                    //"image": "bluetooth.png"
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
                 }
             ]
-        }
+        },
+        {
+            "name": "permission enforcement",
+            "subdomains": [
+                {
+                    "name": "Contacts",
+                },
+                {
+                    "name": "SMS",
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
+                },
+                {
+                    "name": "Bluetooth",
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
+                }
+            ]
+        },
     ],
     "packages": [
         {
@@ -130,16 +444,115 @@ var selectedApps = {
             "name": "permission granted",
             "subdomains": [
                 {
-                    "name": "Location",
-                    //"image": "location.png"
+                    "name": "Contacts",
                 },
                 {
                     "name": "SMS",
-                    //"image": "sms.png"
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
                 },
                 {
                     "name": "Bluetooth",
-                    //"image": "bluetooth.png"
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
                 }
             ]
         },
@@ -147,93 +560,291 @@ var selectedApps = {
             "name": "permission usage",
             "subdomains": [
                 {
-                    "name": "Location",
-                    //"image": "location.png"
+                    "name": "Contacts",
                 },
                 {
                     "name": "SMS",
-                    //"image": "sms.png"
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
                 },
                 {
                     "name": "Bluetooth",
-                    //"image": "bluetooth.png"
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
                 }
             ]
-        }
+        },
+        {
+            "name": "permission enforcement",
+            "subdomains": [
+                {
+                    "name": "Contacts",
+                },
+                {
+                    "name": "SMS",
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
+                },
+                {
+                    "name": "Bluetooth",
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
+                }
+            ]
+        },
     ],
     "packages": []
-}
+};
+
+let csv_explicit = {};
+let csv_implicit = {};
+let csv_perm_e = {};
+let csv_perm_g = {};
+let csv_perm_u = {};
 
 // get data from csv files.
 let domainExplicitCSV = d3.csv("deldroid-input2/domain-explicit-communication-5.csv",
     function(error, data) {
-        if (error) throw error;
-        console.log(data);
-
-        let domain = get_domain_from_file("domain-explicit-communication-5.csv");
-        console.log(create_json_domains(data, domain));
-        let csv_data = create_json_domains(data, domain);
-        return csv_data;
-        
-    });
+        csv_explicit = data;
+    }
+);
 
 let domainImplicitCSV = d3.csv("deldroid-input2/domain-implicit-communication-5.csv",
     function(error, data) {
-        if (error) throw error;
-        console.log(data);
-
-        let domain = get_domain_from_file("domain-implicit-communication-5.csv");
-        console.log(create_json_domains(data, domain));
-        let csv_data = create_json_domains(data, domain);
-        return csv_data;
-        
-    });
+        csv_implicit = data;
+    }
+);
 
 let permissionEnforcementCSV = d3.csv("deldroid-input2/domain-permission-enforcement-5.csv",
     function(error, data) {
-        if (error) throw error;
-        console.log(data); // [{"Hello": "world"}, …]
-
-        let domain = get_domain_from_file("domain-permission-enforcement-5.csv");
-        console.log(create_json_domains(data, domain));
-        let csv_data = create_json_domains(data, domain);
-        return csv_data;
-    });
+        csv_perm_e = data;
+    }
+);
 
 let permissionGrantedCSV = d3.csv("deldroid-input2/domain-permission-granted-5.csv",
     function(error, data) {
-        if (error) throw error;
-        console.log(data); // [{"Hello": "world"}, …]
-
-        let domain = get_domain_from_file("domain-permission-granted-5.csv");
-        console.log(create_json_domains(data, domain));
-        let csv_data = create_json_domains(data, domain);
-        return csv_data;
-    });
+        csv_perm_g = data;
+    }
+);
 
 let permissionUsageCSV = d3.csv("deldroid-input2/domain-permission-usage-5.csv",
     function(error, data) {
-        if (error) throw error;
-        console.log(data); // [{"Hello": "world"}, …]
-
-        let domain = get_domain_from_file("domain-permission-usage-5.csv");
-        console.log(create_json_domains(data, domain));
-        let csv_data = create_json_domains(data, domain);
-        return csv_data;
-    });
+        csv_perm_u = data;
+    }
+);
 
 // build xml text string from analysis results.
 analysisResults = ''
 
 let apps = [] 
 let numAppsProcessed = 0;
-let components = []     // each value is an array consisting of the app name followed by the components in that app. 
-                        // ex. [['Messaging', 'ListMsgs', 'Composer', 'Sender'], ['FunGame', 'Main', 'LevelUp']]
-let attacks = []        // 'p' = privilege escalation
-                        // 'u' = unauthorized intent receipt
-                        // 'i' = intent spoofing
-                        // [attack type, attacker component name, victim component name, resource]
-                        // ex. [['p', 'ListMsgs', 'Composer', 'SMS'], ['e', 'Composer', 'Sender', 'LOCATION']...]
+let components = []         // each value is an array consisting of the app name followed by the components in that app. 
+                            // ex. [['Messaging', 'ListMsgs', 'Composer', 'Sender'], ['FunGame', 'Main', 'LevelUp']]
+let numComponents = 0;
+let componentsDsmID = []    // ex. [['Messaging', 1, 5, 2], ['Fungame', 3, 9, 6]]
+let componentsDsmIDFlat = [] // ex. [1, 5, 2, 3, 9, 6]
+let componentsType = []
+let attacks = []            // 'p' = privilege escalation
+                            // 'u' = unauthorized intent receipt
+                            // 'i' = intent spoofing
+                            // [attack type, attacker component name, victim component name, resource]
+                            // ex. [['p', 'ListMsgs', 'Composer', 'SMS'], ['e', 'Composer', 'Sender', 'LOCATION']...]
 
 function addAnalysisResults(event) {
     // add analysis sheet.
@@ -260,33 +871,51 @@ function addAppFiles(event) {
     }
 }
 
-function addComponents(appsToParse) {
+function addComponents() {
     // apps is an array of xml strings, with each array item representing one xml file.
     let parser = new DOMParser();
     
     for (var i = 0; i < apps.length; i++) {
-        let item = [];
+        let item = []; // item that will be added to components array.
+        let itemIDs = []; // item that will be added to componentsDsmID array.
+        let itemTypes = []; // item that will be added to componentsType array.
         let xmlDoc = parser.parseFromString(apps[i], "text/xml");
         // first add the app's name.
         let name = xmlDoc.getElementsByTagName("name");
         item.push(name[0].textContent);
+        itemIDs.push(name[0].textContent);
+        itemTypes.push(name[0].textContent);
         // then add the components for that app.
         comps = [];
         comps = xmlDoc.getElementsByTagName("components");
-        console.log(comps);
 
         for (var j = 0; j < comps[0].childNodes.length; j++) {
             if (comps[0].childNodes[j].nodeName === 'component') {
-                item.push(comps[0].childNodes[j].childNodes[7].textContent);
+                item.push(comps[0].childNodes[j].childNodes[5].textContent);
+                itemIDs.push(comps[0].childNodes[j].childNodes[3].textContent);
+                itemTypes.push(comps[0].childNodes[j].childNodes[11].textContent);
+                // increase component count for each component added.
+                numComponents++;
             }
         }
         // add the app's components to the total list of components.
         components.push(item);
+        // add the app's components' DSMIds to the total list of component IDs.
+        componentsDsmID.push(itemIDs);
+        // add the app's components' types to the total list of components types
+        componentsType.push(itemTypes);
+        // construct the flat components ID list, which will be needed to determine interaction values from csv files.
     }
-    addAttacks(components);
+
+    for (let i = 0; i < componentsDsmID.length; i++) {
+        for (let j = 1; j < componentsDsmID[i].length; j++) {
+            componentsDsmIDFlat.push(componentsDsmID[i][j]);
+        }
+    }
+    addAttacks();
 }
 
-function addAttacks(componentsList) {
+function addAttacks() {
     // add all applicable attacks. these are the ones where the attacker and victim are both in the components list built from the user's selected apps.
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(analysisResults, "text/xml");
@@ -298,13 +927,15 @@ function addAttacks(componentsList) {
     for (var i = 0; i < privilegeAttackInstances.length; i++) {
         let attacker = privilegeAttackInstances[i].childNodes[3].textContent;
         let victim = privilegeAttackInstances[i].childNodes[11].textContent;
-        privilegeAttacks.push(['p', attacker, victim]);
+        // add resource.
+        let resource = privilegeAttackInstances[i].childNodes[19].textContent;
+        privilegeAttacks.push(['p', attacker, victim, resource]);
     }
 
     // build list of all possible unauthorized intent receipt attacks.
     let unauthAttackInstances = [];
     let unauthAttacks = [];
-    unauthAttackInstances = xmlDoc.getElementsByTagName("intentSpoofingInstance");
+    unauthAttackInstances = xmlDoc.getElementsByTagName("unauthorizedIntentReceiptInstance");
     
     for (var i = 0; i < unauthAttackInstances.length; i++) {
         let attacker = unauthAttackInstances[i].childNodes[3].textContent;
@@ -315,17 +946,13 @@ function addAttacks(componentsList) {
     // build list of all possible intent spoofing attacks.
     let spoofAttackInstances = [];
     let spoofAttacks = [];
-    spoofAttackInstances = xmlDoc.getElementsByTagName("unauthorizedIntentReceiptInstance");
+    spoofAttackInstances = xmlDoc.getElementsByTagName("intentSpoofingInstance");
     
     for (var i = 0; i < spoofAttackInstances.length; i++) {
         let attacker = spoofAttackInstances[i].childNodes[3].textContent;
         let victim = spoofAttackInstances[i].childNodes[11].textContent;
         spoofAttacks.push(['s', attacker, victim]);
     }
-    console.log('all attacks');
-    console.log(privilegeAttacks);
-    console.log(unauthAttacks);
-    console.log(spoofAttacks);
 
     // go through all of the possible attacks, and see if any of the attacks apply.
     // first do this for privilege attacks.
@@ -384,31 +1011,171 @@ function addAttacks(componentsList) {
         }
     }
 
-    console.log('all attacks so far without dupes: ');
     // remove duplicate attacks.
     attacks = attacks.filter(function(elem, index, self) {
         return index === self.indexOf(elem);
     })
-    console.log(attacks);
-    console.log('components list');
-    console.log(components);
+    populateJSON();
     
+}
+
+function populateJSON() {
+/*
+    // remove duplicate componentDSMIDs (don't know why this happens sometimes...)
+    components = components.filter(function(elem, index, self) {
+        return index === self.indexOf(elem);
+    })
+    */
+
+    let json_object = JSON.parse(JSON.stringify(selectedApps));
+    // add subdomains to explicit and implicit domains. each subdomain's name is the component's dsmID.
+    for (let i = 0; i < componentsDsmID.length; i++) {
+        for (let j = 1; j < componentsDsmID[i].length; j++) {
+            let ID = componentsDsmID[i][j];
+            json_object['domains'][0]['subdomains'].push({"name": ID});
+            json_object['domains'][1]['subdomains'].push({"name":ID});
+        }
+    }
+
+    // add apps and their components. use csv files to determine and add domain data.
+    // first add the apps, aka packages.
+    for (let i = 0; i < components.length; i++) {
+        let packageName = components[i][0];
+        json_object['packages'].push({"package": packageName, "components": []});
+    }
+    // next, add each app's components.
+    for (let i = 0; i < components.length; i++) {
+        for (let j = 1; j < components[i].length; j++) {
+            let componentName = components[i][j];
+            json_object['packages'][i]['components'].push({"component": componentName, "domain_data":[{"domain": "explicit_domain", "data":[]},{"domain": "implicit_domain", "data": []},{"domain": "permission_granted_domain", "data":[]},{"domain": "permission_usage_domain", "data": []},{"domain": "permission_enforcement_domain", "data": []}]});
+        }
+    }
+
+    // next, add domain data for each component in every package.
+    console.log(csv_explicit);
+    console.log(csv_explicit[20][21]);
+    console.log(csv_perm_g);
+    console.log(json_object['packages'][0]['components'].length);
+    console.log('test');
+    console.log(csv_explicit.columns[3]);
+    console.log(componentsDsmIDFlat[0]);
+    console.log('numcolumns: ' + csv_explicit.columns.length);
+    // first add explicit and implicit domain data.
+    for (let i = 0, packageIndex = 0, compIndex = 0; i < componentsDsmIDFlat.length; i++) {
+        let exInteractions = [];
+        let impInteractions = [];
+        // for each component:
+        // first locate the component's correct row in the csv data.
+        for (let j = 0; j < csv_explicit.length; j++) {
+            console.log('inside2');
+            if (componentsDsmIDFlat[i] === csv_explicit.columns[j+3]) {
+                // then populate component's interactions data.
+                for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
+                    // check if column component exists in user's component list.
+                    if (componentsDsmIDFlat.includes(csv_explicit.columns[k])){
+                        // if it does, then add the data.
+                        exInteractions.push(csv_explicit[j][k]);
+                        impInteractions.push(csv_implicit[j][k]);
+                    }
+                }
+            }
+        }
+        // now go back and do the permissions data.
+        let permGInteractions = [];
+        let permUInteractions = [];
+        let permEInteractions = [];
+        let permList = [permGInteractions, permUInteractions, permEInteractions];
+        let permFilesList = [csv_perm_g, csv_perm_u, csv_perm_e];
+        console.log('probelm start');
+        console.log(components);
+        console.log(componentsDsmID);
+        console.log(componentsDsmIDFlat);
+        console.log(components);
+        console.log(componentsType);
+        console.log(numComponents);
+        // locate the correct row
+        for (let j = 0; j < csv_perm_g.length; j++) {
+            console.log(csv_perm_g[331]['ID']);
+            if (csv_perm_g[j]['ID'] === componentsDsmIDFlat[i]) {
+                // then populate.
+                for (let k = 0; k < permList.length; k++) {
+                    permList[k].push(permFilesList[k][j]['(350) CONTACTS']);
+                    permList[k].push(permFilesList[k][j]['(351) SMS']);
+                    permList[k].push(permFilesList[k][j]['(352) STORAGE']);
+                    permList[k].push(permFilesList[k][j]['(353) LOCATION']);
+                    permList[k].push(permFilesList[k][j]['(354) PHONE']);
+                    permList[k].push(permFilesList[k][j]['(355) MICROPHONE']);
+                    permList[k].push(permFilesList[k][j]['(356) CAMERA']);
+                    permList[k].push(permFilesList[k][j]['(357) WRITE_SMS']);
+                    permList[k].push(permFilesList[k][j]['(358) USE_CREDENTIALS']);
+                    permList[k].push(permFilesList[k][j]['(359) INTERNET']);
+                    permList[k].push(permFilesList[k][j]['(360) ACCESS_NETWORK_STATE']);
+                    permList[k].push(permFilesList[k][j]['(361) ACCESS_WIFI_STATE']);
+                    permList[k].push(permFilesList[k][j]['(362) CHANGE_WIFI_STATE']);
+                    permList[k].push(permFilesList[k][j]['(363) BLUETOOTH']);
+                    permList[k].push(permFilesList[k][j]['(364) BLUETOOTH_ADMIN']);
+                    permList[k].push(permFilesList[k][j]['(365) VIBRATE']);
+                    permList[k].push(permFilesList[k][j]['(366) FLASHLIGHT']);
+                    permList[k].push(permFilesList[k][j]['(367) WAKE_LOCK']);
+                    permList[k].push(permFilesList[k][j]['(368) MODIFY_AUDIO_SETTINGS']);
+                    permList[k].push(permFilesList[k][j]['(369) DISABLE_KEYGUARD']);
+                    permList[k].push(permFilesList[k][j]['(370) GET_TASKS']);
+                    permList[k].push(permFilesList[k][j]['(371) RESTART_PACKAGES']);
+                    permList[k].push(permFilesList[k][j]['(372) com.android.launcher.permission.INSTALL_SHORTCUT']);
+                    permList[k].push(permFilesList[k][j]['(373) READ_SYNC_SETTINGS']);
+                    permList[k].push(permFilesList[k][j]['(374) WRITE_SYNC_SETTINGS']);
+                    permList[k].push(permFilesList[k][j]['(375) WRITE_SETTINGS']);
+                    permList[k].push(permFilesList[k][j]['(376) RECEIVE_BOOT_COMPLETED']);
+                    permList[k].push(permFilesList[k][j]['(377) BROADCAST_STICKY']);
+                    permList[k].push(permFilesList[k][j]['(378) MOUNT_UNMOUNT_FILESYSTEMS']);
+                    permList[k].push(permFilesList[k][j]['(379) WRITE_APN_SETTINGS']);
+                    permList[k].push(permFilesList[k][j]['(380) CHANGE_NETWORK_STATE']);
+                    permList[k].push(permFilesList[k][j]['(381) CLEAR_APP_CACHE']);
+                    permList[k].push(permFilesList[k][j]['(382) WRITE_SECURE_SETTINGS']);
+                    permList[k].push(permFilesList[k][j]['(383) READ_LOGS']);
+                    permList[k].push(permFilesList[k][j]['(384) INSTALL_PACKAGES']);
+                    permList[k].push(permFilesList[k][j]['(385) CLEAR_APP_USER_DATA']);
+                    permList[k].push(permFilesList[k][j]['(386) DELETE_PACKAGES']);
+                }
+            }
+        }
+        // populate the json fields.
+        // first explicit.
+        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'] = 
+            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'].concat(exInteractions);
+        // then implicit.
+        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'] = 
+            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'].concat(impInteractions);
+        // then permissions fields.
+        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'] = 
+            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'].concat(permGInteractions);
+
+        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'] = 
+            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'].concat(permUInteractions);
+
+        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'] = 
+            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'].concat(permEInteractions);
+
+        compIndex++;
+        if (compIndex === json_object['packages'][packageIndex]['components'].length) {
+            packageIndex++;
+            compIndex = 0;
+        }
+    }
+    
+    console.log(json_object);
+    selectedApps = JSON.stringify(json_object);
 }
 
 function updateAppsToVisualize(event) {
     selectedApps = []
-    console.log(event.target.files);
-    console.log('asdfasf');
-    console.log(apps.length);
     for (var i = 0; i < apps.length; i++) {
         let reader = new FileReader();
         reader.onload = (function(file) {
             let appData = reader.result;
             selectedApps.push(appData);
-            console.log(appData);
         })
     }
-    return selectedApps
 }
 
 function renderJsonTable(table, div_id) {
@@ -563,11 +1330,12 @@ tableJSON3.packages = [];
 
 d3.csv("deldroid-input/domain-explicit-communication-1.csv",
     function(error, data) {
+        /*
         if (error) throw error;
         console.log(data); // [{"Hello": "world"}, …]
+        */
 
         let domain = get_domain_from_file("domain-explicit-communication-1.csv");
-        console.log(create_json_domains(data, domain));
         let csv_data = create_json_domains(data, domain);
         return csv_data;
     });
