@@ -37,36 +37,356 @@ let tableJSON = {
             ]
         },
         {
-            "name": "permission_granted",
+            "name": "permission granted",
             "subdomains": [
                 {
-                    "name": "Location",
-                    //"image": "location.png"
+                    "name": "Contacts",
                 },
                 {
                     "name": "SMS",
-                    //"image": "sms.png"
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
                 },
                 {
                     "name": "Bluetooth",
-                    //"image": "bluetooth.png"
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
                 }
             ]
         },
         {
-            "name": "permission_usage",
+            "name": "permission usage",
             "subdomains": [
                 {
-                    "name": "Location",
-                    //"image": "location.png"
+                    "name": "Contacts",
                 },
                 {
                     "name": "SMS",
-                    //"image": "sms.png"
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
                 },
                 {
                     "name": "Bluetooth",
-                    //"image": "bluetooth.png"
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
+                }
+            ]
+        },
+        {
+            "name": "permission enforcement",
+            "subdomains": [
+                {
+                    "name": "Contacts",
+                },
+                {
+                    "name": "SMS",
+                },
+                {
+                    "name": "Storage",
+                },
+                {
+                    "name": "Location",
+                },
+                {
+                    "name": "Phone",
+                },
+                {
+                    "name": "Microphone",
+                },
+                {
+                    "name": "Camera",
+                },
+                {
+                    "name": "Write SMS",
+                },
+                {
+                    "name": "Use Credentials",
+                },
+                {
+                    "name": "Internet",
+                },
+                {
+                    "name": "Access Network State",
+                },
+                {
+                    "name": "Access Wifi State",
+                },
+                {
+                    "name": "Change Wifi State",
+                },
+                {
+                    "name": "Bluetooth",
+                },
+                {
+                    "name": "Bluetooth Admin",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Vibrate",
+                },
+                {
+                    "name": "Flashlight",
+                },
+                {
+                    "name": "Wake Lock",
+                },
+                {
+                    "name": "Modify Audio Settings",
+                },
+                {
+                    "name": "Disable Keyguard",
+                },
+                {
+                    "name": "Get Tasks",
+                },
+                {
+                    "name": "Restart Packages",
+                },
+                {
+                    "name": "Install Shortcut",
+                },
+                {
+                    "name": "Read Sync Settings",
+                },
+                {
+                    "name": "Write Sync Settings",
+                },
+                {
+                    "name": "Write Settings",
+                },
+                {
+                    "name": "Receive Boot Completed",
+                },
+                {
+                    "name": "Broadcast Sticky",
+                },
+                {
+                    "name": "Mount/Unmount Filesystems",
+                },
+                {
+                    "name": "Write APN Settings",
+                },
+                {
+                    "name": "Change Network State",
+                },
+                {
+                    "name": "Clear App Cache",
+                },
+                {
+                    "name": "Write Secure Settings",
+                },
+                {
+                    "name": "Read Logs",
+                },
+                {
+                    "name": "Install Packages",
+                },
+                {
+                    "name": "Clear App User Data",
+                },
+                {
+                    "name": "Delete Packages",
                 }
             ]
         }
@@ -89,12 +409,16 @@ let tableJSON = {
                             "data": [0, 0, 0, 0, 0, 0]
                         },
                         {
-                            "domain": "permission_granted",
-                            "data": [0, 0, 1]
+                            "domain": "permission granted",
+                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]//34
                         },
                         {
-                            "domain": "permission_usage",
-                            "data": [0, 0, 1]
+                            "domain": "permission usage",
+                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //38
+                        },
+                        {
+                            "domain": "permission enforcement",
+                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //38
                         }
                     ]
                 },
@@ -112,12 +436,16 @@ let tableJSON = {
                             "data": [0, 0, 1, 0, 0, 0]
                         },
                         {
-                            "domain": "permission_granted",
-                            "data": [0, 1, 0]
+                            "domain": "permission granted",
+                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                         },
                         {
-                            "domain": "permission_usage",
-                            "data": [0, 0, 0]
+                            "domain": "permission usage",
+                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        },
+                        {
+                            "domain": "permission enforcement",
+                            "data": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                         }
                     ]
                 }
@@ -133,11 +461,12 @@ $(document).ready( function(){
     //attach popover info to table cells
     tableJSON.packages.forEach( function(the_package) {
         //attach popover info to package cells
-        let $package_cell = $("tr td.pkg-" + the_package.package);
+        let css_package_cell = "tr td.data-pkg_" + the_package.package;
+        let $package_cell = $(css_package_cell);
 
         $package_cell.attr("data-toggle", "popover");
         //adding data-container this seems to allow you to click on the popover to dismiss it
-        $package_cell.attr("data-container", "tr td.pkg-" + the_package.package);
+        $package_cell.attr("data-container", css_package_cell);
         $package_cell.attr("data-trigger", "click");
         $package_cell.attr("data-placement", "auto");
         $package_cell.attr("data-html", "true");
@@ -147,10 +476,11 @@ $(document).ready( function(){
 
 
         the_package.components.forEach( function(component) {
-            let $component_cell = $("tr td.cpn-" + component.component);
+            let css_component_cell = "tr td.data-cpn_" + component.component;
+            let $component_cell = $(css_component_cell);
 
             $component_cell.attr("data-toggle", "popover");
-            $component_cell.attr("data-container", "tr td.cpn-" + component.component);
+            $component_cell.attr("data-container", css_component_cell);
             $component_cell.attr("data-trigger", "click");
             $component_cell.attr("data-placement", "auto");
             $component_cell.attr("data-html", "true");
@@ -203,7 +533,8 @@ function create_all_table_rows(div_id, table) {
                 table.domains.forEach(function(domain) {
                     if(domain.name === domain_datum.domain) {
                         domain.subdomains.forEach(function(subdomain) {
-                            domain_classes.push(domain.name + "-" + subdomain.name);
+                            domain_classes.push(domain.name.toString().replace(/\s/g, "-") +
+                                "_" + subdomain.name.toString().replace(/\s/g, "-"));
                         });
                     }
                 });
@@ -245,9 +576,9 @@ function create_all_table_rows(div_id, table) {
 }
 
 function create_table_rows(div_id, rows, rowspan) {
-    const class_package =  "pkg-" + rows.package;
-    const class_component =  "cpn-" + rows.component;
-    const class_dsm_idx = "dsmidx-" + rows.component_dsm_idx;
+    const class_package =  "data-pkg_" + rows.package;
+    const class_component =  "data-cpn_" + rows.component;
+    const class_dsm_idx = "data-dsmidx_" + rows.component_dsm_idx;
 
     let row = d3.select("#" + div_id + "_tbody")
         .append("tr")
@@ -279,9 +610,9 @@ function create_table_rows(div_id, rows, rowspan) {
         .enter()
         .append("td")
         .attr("class", function(d, i) {
-            return "col_" + rows.domain_classes[i];
+            return "data-col_" + rows.domain_classes[i];
         })
-        .classed("row_" + rows.component_dsm_idx, true)
+        // .classed("data-row_" + rows.component_dsm_idx, true)
         .text( function(d) { return d; })
 }
 
@@ -356,7 +687,7 @@ Example 10 - rendering analysis results (testing is json structure is good)
 
 var analysisJson = [
     {
-        "attack_type": "privilege_escalation",
+        "attack_type": "privilege escalation",
         "attack_info": {
             "malicious_dsmidx": 2,
             "malicious_component": "LevelUp",
@@ -367,7 +698,7 @@ var analysisJson = [
         }
     },
     {
-        "attack_type": "intent_spoofing",
+        "attack_type": "intent spoofing",
         "attack_info": {
             "malicious_dsmidx": 3,
             "malicious_component": "LevelUp",
@@ -378,7 +709,7 @@ var analysisJson = [
         }
     },
     {
-        "attack_type": "unauthorized_intent_receipt",
+        "attack_type": "unauthorized intent receipt",
         "attack_info": {
             "malicious_dsmidx": 0,
             "malicious_component": "LevelUp",
@@ -406,18 +737,18 @@ function render_attack(attack) {
     let attack_class = "";
 
     if(attack_type === "privilege_escalation") {
-        attack_class = "red";
+        attack_class = "data-attack_privilege-escalation";
     }
     else if(attack_type === "intent_spoofing") {
-        attack_class = "blue";
+        attack_class = "data-attack_intent-spoofing";
     }
-    else if(attack_class === "unauthorized_intent_receipt") {
-        attack_class = "green";
+    else if(attack_class === "unauthorized_intent-receipt") {
+        attack_class = "data-attack_unauthorized_intent-receipt";
     }
 
     //add checks that the table cell is a 1 other wise don't render the attack
-    let table_cell_implicit = $("td.row_" + coords.row + ".col_implicit-" + coords.column);
-    let table_cell_explicit = $("td.row_" + coords.row + ".col_explicit-" + coords.column);
+    let table_cell_implicit = $("tr.data-dsmidx_" + coords.row + " td.data-col_implicit_" + coords.column);
+    let table_cell_explicit = $("tr.data-dsmidx_" + coords.row + " td.data-col_explicit_" + coords.column);
 
     if(table_cell_implicit.html() === "1") {
         table_cell_implicit.addClass(attack_class);
