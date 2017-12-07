@@ -792,12 +792,16 @@ let selectedApps = {
     "packages": []
 };
 
-let attackJson = [
+/*
+FOR REFERENCE ONLY:
+let attacksJSON = [
     {
         "attack_type": "privilege escalation",
         "attack_info": {
+            "malicious_app": "EvilApp",
             "malicious_dsmidx": 2,
             "malicious_component": "ListMsgs",
+            "vulnerable_app": "InnocentApp",
             "vulnerable_dsmidx": 3,
             "vulnerable_component": "Composer",
             "resource_dsmidx": 6,
@@ -807,10 +811,13 @@ let attackJson = [
     {
         "attack_type": "intent spoofing",
         "attack_info": {
+            "malicious_app": "EvilApp",
             "malicious_dsmidx": 3,
             "malicious_component": "LevelUp",
+            "vulnerable_app": "InnocentApp",
             "vulnerable_dsmidx": 2,
             "vulnerable_component": "Sender",
+            "pot_app": "SuspiciousApp",
             "pot_dsmidx": 6,
             "pot_component": "SMS"
         }
@@ -818,15 +825,20 @@ let attackJson = [
     {
         "attack_type": "unauthorized intent receipt",
         "attack_info": {
+            "maliscious_app": "EvilApp",
             "malicious_dsmidx": 0,
             "malicious_component": "LevelUp",
+            "vulnerable_app": "InnocentApp",
             "vulnerable_dsmidx": 3,
             "vulnerable_component": "Sender",
+            "pot_app": "SuspiciousApp",
             "pot_dsmidx": 6,
             "pot_component": "SMS"
         }
     }
 ];
+*/
+let attacksJSON = [];
 
 let csv_explicit = {};
 let csv_implicit = {};
@@ -871,6 +883,7 @@ analysisResults = ''
 let apps = [] 
 let numAppsProcessed = 0;
 let components = []         // each value is an array consisting of the app name followed by the components in that app. 
+let componentsFull = [];    // same as components but with the full names. used to generate attack data.
                             // ex. [['Messaging', 'ListMsgs', 'Composer', 'Sender'], ['FunGame', 'Main', 'LevelUp']]
 let numComponents = 0;
 let componentsDsmID = []    // ex. [['Messaging', 1, 5, 2], ['Fungame', 3, 9, 6]]
@@ -913,21 +926,25 @@ function addComponents() {
     
     for (var i = 0; i < apps.length; i++) {
         let item = []; // item that will be added to components array.
+        let itemFull = [] // same as item but with full component name. used for attack data.
         let itemIDs = []; // item that will be added to componentsDsmID array.
         let itemTypes = []; // item that will be added to componentsType array.
         let xmlDoc = parser.parseFromString(apps[i], "text/xml");
         // first add the app's name.
         let name = xmlDoc.getElementsByTagName("name");
         item.push(name[0].textContent);
+        itemFull.push(name[0].textContent);
         itemIDs.push(name[0].textContent);
         itemTypes.push(name[0].textContent);
         // then add the components for that app.
         comps = [];
         comps = xmlDoc.getElementsByTagName("components");
-
+        console.log('components blah blah');
+        console.log(comps);
         for (var j = 0; j < comps[0].childNodes.length; j++) {
             if (comps[0].childNodes[j].nodeName === 'component') {
                 item.push(comps[0].childNodes[j].childNodes[5].textContent);
+                itemFull.push(comps[0].childNodes[j].childNodes[7].textContent);
                 itemIDs.push(comps[0].childNodes[j].childNodes[3].textContent);
                 itemTypes.push(comps[0].childNodes[j].childNodes[11].textContent);
                 // increase component count for each component added.
@@ -936,6 +953,8 @@ function addComponents() {
         }
         // add the app's components to the total list of components.
         components.push(item);
+        // add the app's components (full name) to list of components with full names.
+        componentsFull.push(itemFull);
         // add the app's components' DSMIds to the total list of component IDs.
         componentsDsmID.push(itemIDs);
         // add the app's components' types to the total list of components types
@@ -955,17 +974,25 @@ function addAttacks() {
     // add all applicable attacks. these are the ones where the attacker and victim are both in the components list built from the user's selected apps.
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(analysisResults, "text/xml");
+
     // build list of all possible privilege escalation attacks.
     let privilegeAttackInstances = [];
     let privilegeAttacks = [];
     privilegeAttackInstances = xmlDoc.getElementsByTagName("privilegeEscalationInstance");
 
-    for (var i = 0; i < privilegeAttackInstances.length; i++) {
-        let attacker = privilegeAttackInstances[i].childNodes[3].textContent;
-        let victim = privilegeAttackInstances[i].childNodes[11].textContent;
-        // add resource.
+    console.log('p instances');
+    console.log(privilegeAttackInstances);
+    // build each attack item.
+    for (let i = 0; i < privilegeAttackInstances.length; i++) {
+        let malApp = privilegeAttackInstances[i].childNodes[1].textContent;
+        let malComp = privilegeAttackInstances[i].childNodes[3].textContent;
+        let malDsmID = privilegeAttackInstances[i].childNodes[7].textContent;
+        let vulApp = privilegeAttackInstances[i].childNodes[9].textContent;
+        let vulComp = privilegeAttackInstances[i].childNodes[11].textContent;
+        let vulDsmID = privilegeAttackInstances[i].childNodes[15].textContent;
         let resource = privilegeAttackInstances[i].childNodes[19].textContent;
-        privilegeAttacks.push(['p', attacker, victim, resource]);
+        let resourceDsmID = privilegeAttackInstances[i].childNodes[17].textContent;
+        privilegeAttacks.push(['p', malApp, malComp, malDsmID, vulApp, vulComp, vulDsmID, resource, resourceDsmID]);
     }
 
     // build list of all possible unauthorized intent receipt attacks.
@@ -973,34 +1000,51 @@ function addAttacks() {
     let unauthAttacks = [];
     unauthAttackInstances = xmlDoc.getElementsByTagName("unauthorizedIntentReceiptInstance");
     
-    for (var i = 0; i < unauthAttackInstances.length; i++) {
-        let attacker = unauthAttackInstances[i].childNodes[3].textContent;
-        let victim = unauthAttackInstances[i].childNodes[11].textContent;
-        unauthAttacks.push(['u', attacker, victim]);
+    // build each attack item.
+    for (let i = 0; i < unauthAttackInstances.length; i++) {
+        let malApp = unauthAttackInstances[i].childNodes[1].textContent;
+        let malComp = unauthAttackInstances[i].childNodes[3].textContent;
+        let malDsmID = unauthAttackInstances[i].childNodes[7].textContent;
+        let vulApp = unauthAttackInstances[i].childNodes[9].textContent;
+        let vulComp = unauthAttackInstances[i].childNodes[11].textContent;
+        let vulDsmID = unauthAttackInstances[i].childNodes[15].textContent;
+        let potApp = unauthAttackInstances[i].childNodes[17].textContent;
+        let potComp = unauthAttackInstances[i].childNodes[19].textContent;
+        let potCompDsmID = unauthAttackInstances[i].childNodes[23].textContent;
+        unauthAttacks.push(['u', malApp, malComp, malDsmID, vulApp, vulComp, vulDsmID, potApp, potComp, potCompDsmID]);
     }
 
     // build list of all possible intent spoofing attacks.
     let spoofAttackInstances = [];
     let spoofAttacks = [];
     spoofAttackInstances = xmlDoc.getElementsByTagName("intentSpoofingInstance");
-    
-    for (var i = 0; i < spoofAttackInstances.length; i++) {
-        let attacker = spoofAttackInstances[i].childNodes[3].textContent;
-        let victim = spoofAttackInstances[i].childNodes[11].textContent;
-        spoofAttacks.push(['s', attacker, victim]);
+
+    for (let i = 0; i < spoofAttackInstances.length; i++) {
+        let malApp = spoofAttackInstances[i].childNodes[1].textContent;
+        let malComp = spoofAttackInstances[i].childNodes[3].textContent;
+        let malDsmID = spoofAttackInstances[i].childNodes[7].textContent;
+        let vulApp = spoofAttackInstances[i].childNodes[9].textContent;
+        let vulComp = spoofAttackInstances[i].childNodes[11].textContent;
+        let vulDsmID = spoofAttackInstances[i].childNodes[15].textContent;
+        let potApp = spoofAttackInstances[i].childNodes[17].textContent;
+        let potComp = spoofAttackInstances[i].childNodes[19].textContent;
+        let potCompDsmID = spoofAttackInstances[i].childNodes[23].textContent;
+        spoofAttacks.push(['s', malApp, malComp, malDsmID, vulApp, vulComp, vulDsmID, potApp, potComp, potCompDsmID]);
     }
 
+    console.log('possible p attacks');
+    console.log(privilegeAttacks);
     // go through all of the possible attacks, and see if any of the attacks apply.
     // first do this for privilege attacks.
     for (var i = 0; i < privilegeAttacks.length; i++) {
         // check if both the attacker and the victim of the attack exist in the user's components list.
         // check all of the components in each component item.
         // first check if the attacker exists.
-        for (var j = 0; j < components.length; j++) {
-            if (components[j].includes(privilegeAttacks[i][1])) {
+        for (var j = 0; j < componentsFull.length; j++) {
+            if (componentsFull[j].includes(privilegeAttacks[i][2])) {
                 // if it does, then check if the victim exists.
-                for (var k = 0; k < components.length; k++) {
-                    if (components[k].includes(privilegeAttacks[i][2])) {
+                for (var k = 0; k < componentsFull.length; k++) {
+                    if (componentsFull[k].includes(privilegeAttacks[i][5])) {
                         // if both exist, then add to list of attacks.
                         attacks.push(privilegeAttacks[i]);
                     }
@@ -1011,15 +1055,17 @@ function addAttacks() {
     }
 
     // repeat for unauthorized intent receipt and spoofing attacks.
+    console.log('componentsFull');
+    console.log(componentsFull);
     for (var i = 0; i < unauthAttacks.length; i++) {
         // check if both the attacker and the victim of the attack exist in the user's components list.
         // check all of the components in each component item.
         // first check if the attacker exists.
-        for (var j = 0; j < components.length; j++) {
-            if (components[j].includes(unauthAttacks[i][1])) {
+        for (var j = 0; j < componentsFull.length; j++) {
+            if (componentsFull[j].includes(unauthAttacks[i][2])) {
                 // if it does, then check if the victim exists.
-                for (var k = 0; k < components.length; k++) {
-                    if (components[k].includes(unauthAttacks[i][2])) {
+                for (var k = 0; k < componentsFull.length; k++) {
+                    if (componentsFull[k].includes(unauthAttacks[i][5])) {
                         // if both exist, then add to list of attacks.
                         attacks.push(unauthAttacks[i]);
                     }
@@ -1033,11 +1079,11 @@ function addAttacks() {
         // check if both the attacker and the victim of the attack exist in the user's components list.
         // check all of the components in each component item.
         // first check if the attacker exists.
-        for (var j = 0; j < components.length; j++) {
-            if (components[j].includes(spoofAttacks[i][1])) {
+        for (var j = 0; j < componentsFull.length; j++) {
+            if (componentsFull[j].includes(spoofAttacks[i][2])) {
                 // if it does, then check if the victim exists.
-                for (var k = 0; k < components.length; k++) {
-                    if (components[k].includes(spoofAttacks[i][2])) {
+                for (var k = 0; k < componentsFull.length; k++) {
+                    if (componentsFull[k].includes(spoofAttacks[i][5])) {
                         // if both exist, then add to list of attacks.
                         attacks.push(spoofAttacks[i]);
                     }
@@ -1056,13 +1102,13 @@ function addAttacks() {
 }
 
 function populateJSON() {
-    let json_object = JSON.parse(JSON.stringify(selectedApps));
+    let jsonObject = JSON.parse(JSON.stringify(selectedApps));
     // add subdomains to explicit and implicit domains. each subdomain's name is the component's dsmID.
     for (let i = 0; i < componentsDsmID.length; i++) {
         for (let j = 1; j < componentsDsmID[i].length; j++) {
             let ID = componentsDsmID[i][j];
-            json_object['domains'][0]['subdomains'].push({"name": ID});
-            json_object['domains'][1]['subdomains'].push({"name":ID});
+            jsonObject['domains'][0]['subdomains'].push({"name": ID});
+            jsonObject['domains'][1]['subdomains'].push({"name":ID});
         }
     }
 
@@ -1070,13 +1116,13 @@ function populateJSON() {
     // first add the apps, aka packages.
     for (let i = 0; i < components.length; i++) {
         let packageName = components[i][0];
-        json_object['packages'].push({"package": packageName, "components": []});
+        jsonObject['packages'].push({"package": packageName, "components": []});
     }
     // next, add each app's components.
     for (let i = 0; i < components.length; i++) {
         for (let j = 1; j < components[i].length; j++) {
             let componentName = components[i][j];
-            json_object['packages'][i]['components'].push({"component": componentName, "domain_data":[{"domain": "explicit_domain", "data":[]},{"domain": "implicit_domain", "data": []},{"domain": "permission_granted_domain", "data":[]},{"domain": "permission_usage_domain", "data": []},{"domain": "permission_enforcement_domain", "data": []}]});
+            jsonObject['packages'][i]['components'].push({"component": componentName, "domain_data":[{"domain": "explicit_domain", "data":[]},{"domain": "implicit_domain", "data": []},{"domain": "permission_granted_domain", "data":[]},{"domain": "permission_usage_domain", "data": []},{"domain": "permission_enforcement_domain", "data": []}]});
         }
     }
 
@@ -1084,7 +1130,7 @@ function populateJSON() {
     console.log(csv_explicit);
     console.log(csv_explicit[20][21]);
     console.log(csv_perm_g);
-    console.log(json_object['packages'][0]['components'].length);
+    console.log(jsonObject['packages'][0]['components'].length);
     console.log('test');
     console.log(csv_explicit.columns[3]);
     console.log(componentsDsmIDFlat[0]);
@@ -1096,7 +1142,6 @@ function populateJSON() {
         // for each component:
         // first locate the component's correct row in the csv data.
         for (let j = 0; j < csv_explicit.length; j++) {
-            console.log('inside2');
             if (componentsDsmIDFlat[i] === csv_explicit.columns[j+3]) {
                 // then populate component's interactions data.
                 for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
@@ -1115,16 +1160,9 @@ function populateJSON() {
         let permEInteractions = [];
         let permList = [permGInteractions, permUInteractions, permEInteractions];
         let permFilesList = [csv_perm_g, csv_perm_u, csv_perm_e];
-        console.log('probelm start');
-        console.log(components);
-        console.log(componentsDsmID);
-        console.log(componentsDsmIDFlat);
-        console.log(components);
-        console.log(componentsType);
-        console.log(numComponents);
+
         // locate the correct row
         for (let j = 0; j < csv_perm_g.length; j++) {
-            console.log(csv_perm_g[331]['ID']);
             if (csv_perm_g[j]['ID'] === componentsDsmIDFlat[i]) {
                 // then populate.
                 for (let k = 0; k < permList.length; k++) {
@@ -1170,36 +1208,80 @@ function populateJSON() {
         }
         // populate the json fields.
         // first explicit.
-        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'] = 
-            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'].concat(exInteractions);
+        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'] = 
+            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'].concat(exInteractions);
         // then implicit.
-        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'] = 
-            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'].concat(impInteractions);
+        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'] = 
+            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'].concat(impInteractions);
         // then permissions fields.
-        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'] = 
-            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'].concat(permGInteractions);
+        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'] = 
+            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'].concat(permGInteractions);
 
-        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'] = 
-            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'].concat(permUInteractions);
+        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'] = 
+            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'].concat(permUInteractions);
 
-        json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'] = 
-            json_object['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'].concat(permEInteractions);
+        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'] = 
+            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'].concat(permEInteractions);
 
         compIndex++;
-        if (compIndex === json_object['packages'][packageIndex]['components'].length) {
+        if (compIndex === jsonObject['packages'][packageIndex]['components'].length) {
             packageIndex++;
             compIndex = 0;
         }
     }
     
-    console.log(json_object);
-    selectedApps = JSON.stringify(json_object);
-    populateAttackJSON();
+    console.log(jsonObject);
+    selectedApps = JSON.stringify(jsonObject);
+    populateAttacksJSON();
 }
 
-function populateAttackJSON() {
+function populateAttacksJSON() {
+    let jsonAttackObject = JSON.parse(JSON.stringify(attacksJSON));
     console.log('attacks');
     console.log(attacks);
+    let type, resourceDsmID, resource, potDsmId, potApp, potComp, malApp, malDsmID, malComp, vulApp, vulDsmID, vulComp;
+    for (let i = 0; i < attacks.length; i++) {
+        let attackObj = {}
+        switch(attacks[i][0]) {
+            case 'p':
+                type = "privilege escalation";
+                resourceDsmID = attacks[i][8];
+                resource = attacks[i][7];
+                break;
+            case 's':
+                type = "intent spoofing";
+                potDsmId = attacks[i][9];
+                potApp = attacks[i][7];
+                potComp = attacks[i][8];
+                break;
+            case 'u':
+                type = "unauthorized intent receipt";
+                potDsmId = attacks[i][9];
+                potApp = attacks[i][7];
+                potComp = attacks[i][8];
+        }
+        malApp = attacks[i][1];
+        malDsmID = attacks[i][3];
+        malComp = attacks[i][2];
+        vulApp = attacks[i][4];
+        vulDsmID = attacks[i][6];
+        vulComp = attacks[i][5];
+        
+        switch(type) {
+            case 'privilege escalation':
+                attackObj = {"attack_type": type, "attack_info": {"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulnerable_component": vulComp, "resource_dsmidx": resourceDsmID, "resource": resource}};
+                break;
+            case 'intent spoofing':
+                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
+                break;
+            case 'unauthorized intent receipt':
+                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": VulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
+        }
+        
+        jsonAttackObject.push(attackObj);
+    }
+        console.log(jsonAttackObject);
+        attacksJSON = JSON.stringify(jsonAttackObject);
 }
 
 function updateAppsToVisualize(event) {
