@@ -125,15 +125,15 @@ th {
     text-align: center;
 }
 
-.data-attack_privilege-escalation {
+[data-attack="privilege escalation"] {
     color: crimson;
 }
 
-.data-attack_intent-spoofing {
+[data-attack="intent spoofing"] {
     color: deepskyblue;
 }
 
-.data-attack_unauthorized-intent-receipt {
+[data-attack="unauthorized intent receipt"] {
     color: yellowgreen;
 }
 
