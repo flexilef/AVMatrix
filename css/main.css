@@ -106,38 +106,44 @@ body {
     margin: 5% 15% 10% 15%;
 }
 
-table, td, th {
-    border: 1px cornflowerblue solid;
-    border-collapse: collapse;
-    padding: 10px;
+/*table, td, th {*/
+    /*border: 1px cornflowerblue solid;*/
+    /*border-collapse: collapse;*/
+    /*padding: 10px;*/
+    /*text-align: center;*/
+/*}*/
+
+/*th {*/
+    /*background-color: #b3d4fc;*/
+/*}*/
+
+/*.header {*/
+    /*background-color: #b3d4fc;*/
+    /*border: 1px cornflowerblue solid;*/
+    /*border-collapse: collapse;*/
+    /*padding: 10px;*/
+    /*text-align: center;*/
+/*}*/
+
+table {
     text-align: center;
 }
 
-th {
+td.cell-active {
     background-color: #b3d4fc;
 }
 
-.header {
-    background-color: #b3d4fc;
-    border: 1px cornflowerblue solid;
-    border-collapse: collapse;
-    padding: 10px;
-    text-align: center;
+td[data-attacktype="privilege escalation"] {
+    background-color: indianred;
 }
 
-[data-attacktype="privilege escalation"] {
-    color: crimson;
+td[data-attacktype="intent spoofing"] {
+    background-color: indianred;
 }
 
-[data-attacktype="intent spoofing"] {
-    color: deepskyblue;
+td[data-attacktype="unauthorized intent receipt"] {
+    background-color: indianred;
 }
-
-[data-attacktype="unauthorized intent receipt"] {
-    color: yellowgreen;
-}
-
-
 
 
 

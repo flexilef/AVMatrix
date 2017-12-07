@@ -402,7 +402,7 @@ let tableJSON = {
                     "domain_data": [
                         {
                             "domain": "explicit",
-                            "data": [0, 0, 0, 1, 0, 0]
+                            "data": [1, 0, 0, 1, 0, 0]
                         },
                         {
                             "domain": "implicit",
@@ -649,7 +649,13 @@ function create_table_structure(div_id) {
     d3.select("#" + div_id)
         .append("table")
         .attr("id", div_id + "_table")
+        .classed("table", true)
+        .classed("table-responsive", true)
+        .classed("table-striped", true)
+        .classed("table-bordered", true)
+        .classed("table-hover", true)
         .append("thead")
+        .classed("thead", true)
         .attr("id", div_id + "_thead");
 
     d3.select("#" + div_id + "_table")
@@ -781,7 +787,14 @@ function create_table_rows(div_id, rows, rowspan) {
         .attr("data-col", function(d, i) {
             return rows.domain_classes[i];
         })
-        .text( function(d) { return d; })
+        .classed("cell-active", function(d, i) {
+            if(d === 1) {
+                return true;
+            }
+
+            return false;
+        })
+        .attr("data-matrix_value", function(d) { return d; })
 }
 
 function create_all_table_headers(div_id, table) {
@@ -878,7 +891,7 @@ function render_attack(attack) {
 
     let $table_cells = $("tr[data-dsmidx='" + coords.row + "'] td[data-col*='dsmidx-" + coords.column + "']");
     $table_cells.each(function() {
-        if($(this).html() === "1") {
+        if($(this).attr("data-matrix_value") === "1") {
             $(this).attr("data-attacktype", attack_type);
             $(this).attr("data-attack", true);
         }
