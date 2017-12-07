@@ -430,7 +430,7 @@ var tableJSON = {
 };
 
 var input = document.querySelector('input');
-var selectedApps = {
+let selectedApps = {
     "domains": [
         {
             "name": "explicit",
@@ -792,6 +792,42 @@ var selectedApps = {
     "packages": []
 };
 
+let attackJson = [
+    {
+        "attack_type": "privilege escalation",
+        "attack_info": {
+            "malicious_dsmidx": 2,
+            "malicious_component": "ListMsgs",
+            "vulnerable_dsmidx": 3,
+            "vulnerable_component": "Composer",
+            "resource_dsmidx": 6,
+            "resource": "SMS"
+        }
+    },
+    {
+        "attack_type": "intent spoofing",
+        "attack_info": {
+            "malicious_dsmidx": 3,
+            "malicious_component": "LevelUp",
+            "vulnerable_dsmidx": 2,
+            "vulnerable_component": "Sender",
+            "pot_dsmidx": 6,
+            "pot_component": "SMS"
+        }
+    },
+    {
+        "attack_type": "unauthorized intent receipt",
+        "attack_info": {
+            "malicious_dsmidx": 0,
+            "malicious_component": "LevelUp",
+            "vulnerable_dsmidx": 3,
+            "vulnerable_component": "Sender",
+            "pot_dsmidx": 6,
+            "pot_component": "SMS"
+        }
+    }
+];
+
 let csv_explicit = {};
 let csv_implicit = {};
 let csv_perm_e = {};
@@ -1020,13 +1056,6 @@ function addAttacks() {
 }
 
 function populateJSON() {
-/*
-    // remove duplicate componentDSMIDs (don't know why this happens sometimes...)
-    components = components.filter(function(elem, index, self) {
-        return index === self.indexOf(elem);
-    })
-    */
-
     let json_object = JSON.parse(JSON.stringify(selectedApps));
     // add subdomains to explicit and implicit domains. each subdomain's name is the component's dsmID.
     for (let i = 0; i < componentsDsmID.length; i++) {
@@ -1165,6 +1194,12 @@ function populateJSON() {
     
     console.log(json_object);
     selectedApps = JSON.stringify(json_object);
+    populateAttackJSON();
+}
+
+function populateAttackJSON() {
+    console.log('attacks');
+    console.log(attacks);
 }
 
 function updateAppsToVisualize(event) {
