@@ -642,8 +642,8 @@ function populateJSON() {
     for (let i = 0; i < componentsDsmID.length; i++) {
         for (let j = 1; j < componentsDsmID[i].length; j++) {
             let ID = componentsDsmID[i][j];
-            selectedApps['domains'][0]['subdomains'].push({"name": ID});
-            selectedApps['domains'][1]['subdomains'].push({"name":ID});
+            selectedApps['domains'][1]['subdomains'].push({"name": ID});
+            selectedApps['domains'][2]['subdomains'].push({"name":ID});
         }
     }
 
