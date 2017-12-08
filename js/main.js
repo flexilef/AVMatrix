@@ -810,11 +810,32 @@ function populateAttacksJSON() {
         
         jsonAttackObject.push(attackObj);
     }
-        console.log(jsonAttackObject);
-        attackJson = JSON.stringify(jsonAttackObject);
+
+    // console.log(jsonAttackObject);
+    attackJson = JSON.stringify(jsonAttackObject);
+
+    enable_visualize_button();
+}
+
+function enable_visualize_button() {
+    // console.log("ALL IS LOADED\n");
+    // console.log(selectedApps);
+
+    $visualize_button = $("#visualize_button");
+
+    $visualize_button.attr("disabled", false)
 }
 
 $(document).ready( function(){
+
+    $visualize_button = $("#visualize_button");
+    // if($visualize_button.attr("data-active", false)) {
+    //     $visualize_button.hide();
+    // }
+    // else {
+    //     $visualize_button.show();
+    // }
+
     // renderJsonTable(selectedApps, "example8");
     //
     // render_analysis();
@@ -995,11 +1016,13 @@ function create_table_structure(div_id) {
         .attr("id", div_id + "_tbody");
 }
 
-function create_all_table_rows(div_id, table) {
+function create_all_table_rows(div_id, table_json) {
     let rows_data = [];
     let grouped_domain_data = [];
     let domain_classes = [];
     let permission_classes = [];
+
+    let table = JSON.parse(table_json);
 
     //prepare rows data
     table.packages.forEach(function(the_package) {
@@ -1110,7 +1133,7 @@ function create_table_rows(div_id, rows, rowspan) {
         .text(rows.component_dsm_idx);
 
     //populate domain data
-    d3.select("tr[data-pkg=" + rows.package + "][data-cpn=" + rows.component + "]")
+    d3.select("tr[data-pkg='" + rows.package + "'][data-cpn='" + rows.component + "']")
         .selectAll("td.g") //g to create a new grouping? and prevent rebinding data to the first two td headers
         .data(rows.data)
         .enter()
@@ -1129,12 +1152,17 @@ function create_table_rows(div_id, rows, rowspan) {
         .attr("data-matrix_value", function(d) { return d; })
 }
 
-function create_all_table_headers(div_id, table) {
+function create_all_table_headers(div_id, table_json) {
     let domain_headers = {
         "domains": ["", ""],
         "subdomains": ["Packages", "Components"],
         "colspan": [1, 1]
     };
+
+    let table = JSON.parse(table_json);
+
+    console.log("My TABLE !!!!!");
+    console.log(typeof(table));
 
     //prepare all domain header arrays
     table.domains.forEach(function(domain) {
