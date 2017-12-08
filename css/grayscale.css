@@ -226,8 +226,12 @@ table {
 }
 
 td.cell-active {
-  background-color: #b3d4fc;
+  background-color: darkslategray;
 }
+
+/*th {*/
+  /*background-color: darkslategray;*/
+/*}*/
 
 td[data-attacktype="privilege escalation"] {
   background-color: indianred;

@@ -672,6 +672,8 @@ function populateJSON() {
     console.log(csv_explicit.columns[3]);
     console.log(componentsDsmIDFlat[0]);
     console.log('numcolumns: ' + csv_explicit.columns.length);
+    console.log(csv_explicit);
+    console.log(componentsDsmIDFlat);
     // first add explicit and implicit domain data.
     for (let i = 0, packageIndex = 0, compIndex = 0; i < componentsDsmIDFlat.length; i++) {
         let exInteractions = [];
@@ -679,11 +681,13 @@ function populateJSON() {
         // for each component:
         // first locate the component's correct row in the csv data.
         for (let j = 0; j < csv_explicit.length; j++) {
+            //j+3 to start at the first explicit value
             if (componentsDsmIDFlat[i] === csv_explicit.columns[j+3]) {
                 // then populate component's interactions data.
-                for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
+                // for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
+                for (let k = 0; k < csv_explicit.columns.length; k++) {
                     // check if column component exists in user's component list.
-                    if (componentsDsmIDFlat.includes(csv_explicit.columns[k])){
+                    if (componentsDsmIDFlat.includes(csv_explicit.columns[k+3])){
                         // if it does, then add the data.
                         exInteractions.push(csv_explicit[j][k]);
                         impInteractions.push(csv_implicit[j][k]);
@@ -691,6 +695,8 @@ function populateJSON() {
                 }
             }
         }
+        console.log("LFJDSLKFJKLDSFJHSDLKFJLKSDJKFL");
+        console.log(exInteractions);
         // now go back and do the permissions data.
         let permGInteractions = [];
         let permUInteractions = [];
@@ -1125,22 +1131,19 @@ function create_table_rows(div_id, rows, rowspan) {
         .append("td")
         .attr("data-row", rows.package + "_" + rows.component + "_dsmidx-" + rows.component_dsm_idx)
         .attr("data-col", function(d, i) {
-            console.log("DOMAIN CLASSES");
-            console.log(rows.domain_classes[i]);
             return rows.domain_classes[i];
         })
         .classed("cell-active", function(data) {
-            if(data === 1) {
+            if(data === "1") {
                 return true;
             }
         })
         .classed("cell-notactive", function(data) {
-            if(data === 0) {
+            if(data === "0") {
                 return true;
             }
         })
         .attr("data-matrix_value", function(d) { return d; })
-        .text(function(d) { return d; })
 }
 
 function create_all_table_headers(div_id, table) {
@@ -1242,6 +1245,8 @@ function render_attack(attack) {
     let $table_cells = $("tr[data-dsmidx='" + coords.row + "'] td[data-col*='dsmidx-" + coords.column + "']");
     $table_cells.each(function() {
         if($(this).attr("data-matrix_value") === "1") {
+            console.log("AYTYYAYAYAYAYYCK");
+            console.log(attack_type);
             $(this).attr("data-attacktype", attack_type);
             $(this).attr("data-attack", true);
         }
