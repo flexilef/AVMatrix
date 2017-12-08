@@ -915,12 +915,22 @@ function add_attack_popovers() {
         }
 
         //get attack info
+        console.log("ATTTATATATTAATCk");
+        console.log(attackJson);
         attackJson.forEach(function(attack) {
             if(attack.attack_type === attack_type) {
                 if(attack.attack_info.malicious_dsmidx.toString() === attacker_dsmidx &&
                     attack.attack_info.vulnerable_dsmidx.toString() === victim_dsmidx) {
                     attack_info.attacker = attack.attack_info.malicious_component;
                     attack_info.victim = attack.attack_info.vulnerable_component;
+
+                    if(attack_type !== "privilege escalation") {
+                        attack_info.pot_app = attack.attack_info.pot_app;
+                        attack_info.pot_component = attack.attack_info.pot_component;
+                    }
+                    else {
+                        attack_info.resource = attack.attack_info.resource;
+                    }
                 }
             }
         });
@@ -931,7 +941,18 @@ function add_attack_popovers() {
         $(this).attr("data-html", "true");
         $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header attack\"></h3><div class=\"popover-body\"></div></div>');
         $(this).attr("data-title", attack_type);
-        $(this).attr("data-content", "<p>Attacker: " + attack_info.attacker + "</p>" + "<p>Victim: " + attack_info.victim + "</p>");
+
+        if(attack_type === "privilege escalation") {
+            $(this).attr("data-content", "<p>Attacker: " + attack_info.attacker + "</p>" +
+                "<p>Victim: " + attack_info.victim + "</p>" +
+                "<p>Resource: " + attack_info.resource + "</p>");
+        }
+        else {
+            $(this).attr("data-content", "<p>Attacker: " + attack_info.attacker + "</p>" +
+                "<p>Victim: " + attack_info.victim + "</p>" +
+                "<p>Potential Application: " + attack_info.pot_app + "</p>" +
+                "<p>Potential Application: " + attack_info.pot_component + "</p>");
+        }
     });
 }
 
