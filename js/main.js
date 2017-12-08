@@ -9,6 +9,12 @@ var input = document.querySelector('input');
 let selectedApps = {
     "domains": [
         {
+            "name": " ",
+            "subdomains": [
+                { "name": "ID" }
+            ]
+        },
+        {
             "name": "explicit",
             "subdomains": []
         },
@@ -761,7 +767,9 @@ function populateJSON() {
     }
     
     console.log(jsonObject);
-    selectedApps = JSON.stringify(jsonObject);
+    // selectedApps = JSON.stringify(jsonObject);
+    selectedApps = jsonObject;
+
     populateAttacksJSON();
 }
 
@@ -811,8 +819,9 @@ function populateAttacksJSON() {
         jsonAttackObject.push(attackObj);
     }
 
-    // console.log(jsonAttackObject);
-    attackJson = JSON.stringify(jsonAttackObject);
+    console.log(jsonAttackObject);
+    // attackJson = JSON.stringify(jsonAttackObject);
+    attackJson = jsonAttackObject;
 
     enable_visualize_button();
 }
@@ -862,7 +871,7 @@ function add_all_popovers() {
 
 function add_package_popovers() {
     //attach popover info to table cells
-    tableJSON.packages.forEach( function(the_package) {
+    selectedApps.packages.forEach( function(the_package) {
         //attach popover info to package cells
         let css_package_cell = "tr td[data-pkg='" + the_package.package + "']";
         let $package_cell = $(css_package_cell);
@@ -939,7 +948,7 @@ function add_permission_popovers() {
         // console.log(component_dsmidx);
 
         //get the permission/subdomain indices so we can iterate through the tableJSON later
-        tableJSON.packages.forEach(function(the_package) {
+        selectedApps.packages.forEach(function(the_package) {
             the_package.components.forEach(function(component) {
                 if(component.dsm_idx.toString() === component_dsmidx) {
                     component.domain_data.forEach(function (domain_datum) {
@@ -965,7 +974,7 @@ function add_permission_popovers() {
         //iterate through each permission to find its subdomain name
         permissions.forEach(function(permission) {
             permission.indices.forEach(function(permission_index) {
-                tableJSON.domains.forEach(function(domain) {
+                selectedApps.domains.forEach(function(domain) {
                     if(domain.name === permission.type) {
                         let permission_name = domain.subdomains[permission_index].name;
 
@@ -1016,13 +1025,13 @@ function create_table_structure(div_id) {
         .attr("id", div_id + "_tbody");
 }
 
-function create_all_table_rows(div_id, table_json) {
+function create_all_table_rows(div_id, table) {
     let rows_data = [];
     let grouped_domain_data = [];
     let domain_classes = [];
     let permission_classes = [];
 
-    let table = JSON.parse(table_json);
+    // let table = JSON.parse(table_json);
 
     //prepare rows data
     table.packages.forEach(function(the_package) {
@@ -1142,24 +1151,27 @@ function create_table_rows(div_id, rows, rowspan) {
         .attr("data-col", function(d, i) {
             return rows.domain_classes[i];
         })
-        .classed("cell-active", function(d, i) {
-            if(d === 1) {
+        .classed("cell-active", function(data) {
+            if(data === 1) {
                 return true;
             }
-
-            return false;
+        })
+        .classed("cell-notactive", function(data) {
+            if(data === 0) {
+                return true;
+            }
         })
         .attr("data-matrix_value", function(d) { return d; })
 }
 
-function create_all_table_headers(div_id, table_json) {
+function create_all_table_headers(div_id, table) {
     let domain_headers = {
         "domains": ["", ""],
         "subdomains": ["Packages", "Components"],
         "colspan": [1, 1]
     };
 
-    let table = JSON.parse(table_json);
+    // let table = JSON.parse(table_json);
 
     console.log("My TABLE !!!!!");
     console.log(typeof(table));
@@ -1238,6 +1250,8 @@ Example 10 - rendering analysis results (testing is json structure is good)
 
 
 function render_analysis() {
+    console.log("TYPE!!!!");
+    console.log(attackJson);
     attackJson.forEach(function(attack) {
         render_attack(attack);
     });

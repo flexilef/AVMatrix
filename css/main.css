@@ -133,6 +133,10 @@ td.cell-active {
     background-color: #b3d4fc;
 }
 
+td.cell-active {
+    background-color: white;
+}
+
 td[data-attacktype="privilege escalation"] {
     background-color: indianred;
 }
