@@ -54,9 +54,9 @@
                 <div class="col-lg-8 mx-auto">
                     <h1 class="brand-heading">AV-Matrix</h1>
                     <p class="intro-text">An architecture visualization tool for the DEL-Droid application</p>
-                    <a href="#visualization_input" class="btn btn-circle js-scroll-trigger">
+                    <button href="#visualization_input" class="btn btn-circle js-scroll-trigger">
                         <i class="fa fa-angle-double-down animated"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
 <!-- visualization input Section -->
 <section id="visualization_input" class="content-section text-center">
     <div class="container">
-        <div class="row">
+        <div class="row top-buffer">
             <div class="col-lg-8 mx-auto">
                 <h2>Please submit your DEL-Droid input files for us to visualize</h2>
             </div>
@@ -75,26 +75,37 @@
             <div class="col-lg-8 mx-auto">
                 <form>
                     <div class="form-group">
-                        <!--new-->
-                        <!--<label class="btn btn-default" for="analysis-file-selector">-->
-                            <!--<input id="analysis-file-selector" type="file" style="display:none"-->
-                                   <!--onchange="$('#analysis-file-info').html(this.files[0].name)">-->
-                            <!--Browse for analysis files-->
-                        <!--</label>-->
-                        <!--<span class='label label-info' id="analysis-file-info"></span>-->
-                        <!--<label class="btn btn-default" for="apps-file-selector">-->
-                            <!--<input id="apps-file-selector" type="file" multiple style="display:none"-->
-                                   <!--onchange="this.files.forEach(function(file, index) {-->
-<!--//                                       if(index === 0) {-->
-                                            <!--$('#apps-file-info').html(file.name);-->
-<!--//                                        }-->
-<!--//                                        else {-->
-<!--//                                            $('#apps-file-info').html(file.name);-->
-<!--//                                        }-->
-                                   <!--})">-->
-                            <!--Browse for application files-->
-                        <!--</label>-->
-                        <!--<span class='label label-info' id="apps-file-info"></span>-->
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <label class="btn btn-default" for="analysis-file-selector">
+                                    <input id="analysis-file-selector" type="file" style="display:none"
+                                           onchange="
+                                           addAnalysisResults(event);
+                                           $('#analysis-file-info').html('...' + this.files[0].name)">
+                                    Browse for analysis files
+                                </label>
+                                <span class='label label-info' id="analysis-file-info"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <label class="btn btn-default" for="apps-file-selector">
+                                    <input id="apps-file-selector" type="file" multiple style="display:none"
+                                           onchange="
+                                            addAppFiles(event);
+                                            $('#apps-file-info').html('...' + this.files.length+' files added...');
+                                            $('#visualize_button').attr('disabled', false);">
+                                    Browse for application files
+                                </label>
+                                <span class='label label-info' id="apps-file-info"></span>
+                            </div>
+                        </div>
+                        <div class="row top-buffer">
+                            <div class="col-lg-4 mx-auto">
+                                <button id="visualize_button" href="#visualization" onclick="visualize()" disabled=true type="button" class="btn btn-default btn-lg">Visualize</button>
+                            </div>
+                        </div>
+                    </div>
                         <!--new end-->
                         <!--<label>-->
                             <!--Analysis Results File-->
@@ -107,18 +118,18 @@
                             <!--<span class="custom-file-control"></span>-->
                             <!--<small id="app-file-help" class="form-text text-muted">Submit at least 2 application files to visualize</small>-->
                     <!--<button type="button" id="visualize_button" onclick="visualize()" class="btn btn-primary" multiple disabled=true>Visualize</button>-->
-                        <div>
-                            <label for="analysis-input">Provide analysis data: </label>
-                            <input type="file" id="analysis-file" onchange="addAnalysisResults(event)">
-                        </div>
-                        <div>
-                            <label for="app-input">Choose app(s) to visualize: </label>
-                            <input  type="file" id="app-file" multiple onchange="addAppFiles(event)">
-                        </div>
-                        <div>
-                            <button id="visualize_button" onclick="visualize()" disabled=true type="button" class="btn btn-outline-primary btn-sm">Visualize</button>
-                        </div>
-                    </div>
+                        <!--<div>-->
+                            <!--<label for="analysis-input">Provide analysis data: </label>-->
+                            <!--<input type="file" id="analysis-file" onchange="addAnalysisResults(event)">-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<label for="app-input">Choose app(s) to visualize: </label>-->
+                            <!--<input  type="file" id="app-file" multiple onchange="addAppFiles(event)">-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<button id="visualize_button" onclick="visualize()" disabled=true type="button" class="btn btn-outline-primary btn-sm">Visualize</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </form>
 
                 <!--<form class="app-input">-->

@@ -284,3 +284,5 @@ td[data-permission_active="true"] {
 tr.attack-row {
   border: 2px inset indianred;
 }
+
+.top-buffer { margin-top:20px; }

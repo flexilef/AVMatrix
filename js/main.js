@@ -831,37 +831,25 @@ function enable_visualize_button() {
     // console.log("ALL IS LOADED\n");
     // console.log(selectedApps);
 
-    $visualize_button = $("#visualize_button");
+    let $visualize_button = $("#visualize_button");
 
     $visualize_button.attr("disabled", false)
 }
 
 $(document).ready( function(){
-
-    $visualize_button = $("#visualize_button");
-    // if($visualize_button.attr("data-active", false)) {
-    //     $visualize_button.hide();
-    // }
-    // else {
-    //     $visualize_button.show();
-    // }
-
-    // renderJsonTable(selectedApps, "example8");
-    //
-    // render_analysis();
-    //
-    // add_all_popovers();
 });
 
 function visualize() {
     renderJsonTable(selectedApps, "example8");
-
     render_analysis();
-
     add_all_popovers();
+
+    //scroll to the results
+
 }
 
 function add_all_popovers() {
+    //packages don't need popovers...
     add_package_popovers();
     add_attack_popovers();
     add_permission_popovers();
@@ -885,7 +873,7 @@ function add_package_popovers() {
         $package_cell.attr("data-html", "true");
         $package_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header pop-default-header\"></h3><div class=\"popover-body\"></div></div>');
         $package_cell.attr("data-title", the_package.package);
-        $package_cell.attr("data-content", "Some info that we can parse out and include in the JSON later");
+        $package_cell.attr("data-content", "");
 
         //attach popover info to component cells
         the_package.components.forEach(function (component) {
@@ -899,7 +887,7 @@ function add_package_popovers() {
             $component_cell.attr("data-html", "true");
             $component_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header pop-default-header\"></h3><div class=\"popover-body\"></div></div>');
             $component_cell.attr("data-title", component.component);
-            $component_cell.attr("data-content", "<p>Type: " + component.type + "</p>" + "<p>Extra: Some extra info</p>");
+            $component_cell.attr("data-content", "<p>Package: " + the_package.package + "</p><p>Type: " + component.type + "</p>");
         });
     });
 }
