@@ -845,7 +845,7 @@ function visualize() {
     add_all_popovers();
 
     //scroll to the results
-
+    $("#visualize_anchor").click();
 }
 
 function add_all_popovers() {
