@@ -986,14 +986,18 @@ function add_permission_popovers() {
             });
         });
 
-        $(this).attr("data-toggle", "popover");
-        $(this).attr("data-trigger", "click");
-        $(this).attr("data-placement", "auto");
-        $(this).attr("data-html", "true");
-        $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
-        $(this).attr("data-title", permission_type);
-        $(this).attr("data-content", popover_content);
+        if(permissions.length > 0) {
+            //if there are permissions, distinguish it
+            $(this).attr("data-permission_active", true);
 
+            $(this).attr("data-toggle", "popover");
+            $(this).attr("data-trigger", "click");
+            $(this).attr("data-placement", "auto");
+            $(this).attr("data-html", "true");
+            $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+            $(this).attr("data-title", permission_type);
+            $(this).attr("data-content", popover_content);
+        }
     });
 }
 
@@ -1013,12 +1017,14 @@ function create_table_structure(div_id) {
         .append("table")
         .attr("id", div_id + "_table")
         .classed("table", true)
+        .classed("table-dark", true)
         .classed("table-responsive", true)
         .classed("table-striped", true)
         .classed("table-bordered", true)
         .classed("table-hover", true)
         .append("thead")
         .classed("thead", true)
+        .classed("thead-dark", true)
         .attr("id", div_id + "_thead");
 
     d3.select("#" + div_id + "_table")

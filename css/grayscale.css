@@ -144,10 +144,10 @@ a {
   padding-top: 150px;
   padding-bottom: 150px; }
 
-.download-section {
+.visualization-section{
   color: white;
   /*background: url("../img/downloads-bg.jpg") no-repeat center center scroll;*/
-  background-color: gray;
+  background-color: darkslategray;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -244,3 +244,10 @@ td[data-attacktype="intent spoofing"] {
 td[data-attacktype="unauthorized intent receipt"] {
   background-color: indianred;
 }
+
+td[data-permission_active="true"] {
+  cursor: pointer;
+  background-color: #42DCA3;
+}
+
+
