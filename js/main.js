@@ -503,6 +503,10 @@ function addComponents() {
             componentsDsmIDFlat.push(componentsDsmID[i][j]);
         }
     }
+
+    //TODO: remove later?
+    componentsDsmIDFlat.sort(function(a, b){ return a - b });
+
     addAttacks();
 }
 
@@ -659,6 +663,7 @@ function populateJSON() {
             let componentName = components[i][j];
             let componentDsmID = componentsDsmID[i][j];
             let componentType = componentsType[i][j];
+
             selectedApps['packages'][i]['components'].push({"component": componentName, "dsm_idx": componentDsmID, "type": componentType, "domain_data":[{"domain": "explicit", "data":[]},{"domain": "implicit", "data": []},{"domain": "permission_granted", "data":[]},{"domain": "permission_usage", "data": []},{"domain": "permission_enforcement", "data": []}]});
         }
     }
@@ -672,6 +677,12 @@ function populateJSON() {
     console.log(csv_explicit.columns[3]);
     console.log(componentsDsmIDFlat[0]);
     console.log('numcolumns: ' + csv_explicit.columns.length);
+    console.log(csv_explicit);
+    console.log(componentsDsmIDFlat);
+
+    // componentsDsmIDFlat.sort(function(a, b){ return a - b });
+    // console.log(componentsDsmIDFlat);
+
     // first add explicit and implicit domain data.
     for (let i = 0, packageIndex = 0, compIndex = 0; i < componentsDsmIDFlat.length; i++) {
         let exInteractions = [];
@@ -679,11 +690,13 @@ function populateJSON() {
         // for each component:
         // first locate the component's correct row in the csv data.
         for (let j = 0; j < csv_explicit.length; j++) {
+            //j+3 to start at the first explicit value
             if (componentsDsmIDFlat[i] === csv_explicit.columns[j+3]) {
                 // then populate component's interactions data.
-                for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
+                // for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
+                for (let k = 0; k < csv_explicit.columns.length; k++) {
                     // check if column component exists in user's component list.
-                    if (componentsDsmIDFlat.includes(csv_explicit.columns[k])){
+                    if (componentsDsmIDFlat.includes(csv_explicit.columns[k+3])){
                         // if it does, then add the data.
                         exInteractions.push(csv_explicit[j][k]);
                         impInteractions.push(csv_implicit[j][k]);
@@ -691,6 +704,8 @@ function populateJSON() {
                 }
             }
         }
+        console.log("LFJDSLKFJKLDSFJHSDLKFJLKSDJKFL");
+        console.log(exInteractions);
         // now go back and do the permissions data.
         let permGInteractions = [];
         let permUInteractions = [];
@@ -1239,6 +1254,8 @@ function render_attack(attack) {
     let $table_cells = $("tr[data-dsmidx='" + coords.row + "'] td[data-col*='dsmidx-" + coords.column + "']");
     $table_cells.each(function() {
         if($(this).attr("data-matrix_value") === "1") {
+            console.log("AYTYYAYAYAYAYYCK");
+            console.log(attack_type);
             $(this).attr("data-attacktype", attack_type);
             $(this).attr("data-attack", true);
         }

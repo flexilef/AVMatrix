@@ -229,6 +229,10 @@ td.cell-active {
   background-color: darkslategray;
 }
 
+/*th {*/
+  /*background-color: darkslategray;*/
+/*}*/
+
 td[data-attacktype="privilege escalation"] {
   background-color: indianred;
 }
