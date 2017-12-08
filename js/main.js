@@ -814,10 +814,10 @@ function populateAttacksJSON() {
                 attackObj = {"attack_type": type, "attack_info": {"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulnerable_component": vulComp, "resource_dsmidx": resourceDsmID, "resource": resource}};
                 break;
             case 'intent spoofing':
-                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
+                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulnerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
                 break;
             case 'unauthorized intent receipt':
-                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
+                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulnerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
         }
         
         attackJson.push(attackObj);
@@ -883,7 +883,7 @@ function add_package_popovers() {
         $package_cell.attr("data-trigger", "click");
         $package_cell.attr("data-placement", "auto");
         $package_cell.attr("data-html", "true");
-        $package_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+        $package_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header pop-default-header\"></h3><div class=\"popover-body\"></div></div>');
         $package_cell.attr("data-title", the_package.package);
         $package_cell.attr("data-content", "Some info that we can parse out and include in the JSON later");
 
@@ -897,7 +897,7 @@ function add_package_popovers() {
             $component_cell.attr("data-trigger", "click");
             $component_cell.attr("data-placement", "auto");
             $component_cell.attr("data-html", "true");
-            $component_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+            $component_cell.attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header pop-default-header\"></h3><div class=\"popover-body\"></div></div>');
             $component_cell.attr("data-title", component.component);
             $component_cell.attr("data-content", "<p>Type: " + component.type + "</p>" + "<p>Extra: Some extra info</p>");
         });
@@ -908,13 +908,23 @@ function add_attack_popovers() {
     let css_attack_cells = "tr td[data-attack='true'";
     let $attack_cells = $(css_attack_cells);
 
+    $attack_cells.closest("tr").addClass("attack-row", true);
+
     $attack_cells.each(function() {
         let attack_info = {};
         let attack_type = $(this).attr("data-attacktype");
+        let attacker_dsmidx;
+        let victim_dsmidx;
 
         //get the last element split by _ and then get the last value split by -, which will give you the number without "dsmidx"
-        let attacker_dsmidx = $(this).attr("data-row").toString().split("_").pop().split("-").pop();
-        let victim_dsmidx = $(this).attr("data-col").toString().split("_").pop().split("-").pop();
+        if(attack_type !== "unauthorized intent receipt") {
+            attacker_dsmidx = $(this).attr("data-row").toString().split("_").pop().split("-").pop();
+            victim_dsmidx = $(this).attr("data-col").toString().split("_").pop().split("-").pop();
+        }
+        else {
+            attacker_dsmidx = $(this).attr("data-col").toString().split("_").pop().split("-").pop();
+            victim_dsmidx = $(this).attr("data-row").toString().split("_").pop().split("-").pop();
+        }
 
         //get attack info
         attackJson.forEach(function(attack) {
@@ -1288,14 +1298,20 @@ function render_attack(attack) {
 
     let attack_type = attack.attack_type;
 
-    let $table_cells = $("tr[data-dsmidx='" + coords.row + "'] td[data-col*='dsmidx-" + coords.column + "']");
+    let $table_cells;
+
+    if(attack_type !== "unauthorized intent receipt") {
+        $table_cells = $("tr[data-dsmidx='" + coords.row + "'] td[data-col*='dsmidx-" + coords.column + "']");
+    }
+    else {
+        $table_cells = $("tr[data-dsmidx='" + coords.column + "'] td[data-col*='dsmidx-" + coords.row + "']");
+    }
+
     $table_cells.each(function() {
         if($(this).attr("data-matrix_value") === "1") {
-            console.log("AYTYYAYAYAYAYYCK");
-            console.log(attack_type);
-            $(this).attr("data-attacktype", attack_type);
-            $(this).attr("data-attack", true);
-        }
+                $(this).attr("data-attacktype", attack_type);
+                $(this).attr("data-attack", true);
+            }
     });
 
     console.log(coords.row);

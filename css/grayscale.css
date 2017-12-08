@@ -253,6 +253,13 @@ td[data-permission_active="true"] {
   background-color: #42DCA3;
 }
 
+.popover-header.pop-default-header {
+  background-color: #32383e;
+  border-bottom: 1px solid #42DCA3;
+  color: #42DCA3;
+  font-size: 15px;
+}
+
 .popover-header.permission {
   background-color: #32383e;
   border-bottom: 1px solid #42DCA3;
@@ -272,4 +279,8 @@ td[data-permission_active="true"] {
   background-color: #212529;
   color: white;
   font-size: 10px;
+}
+
+tr.attack-row {
+  border: 2px inset indianred;
 }
