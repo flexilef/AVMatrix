@@ -503,6 +503,10 @@ function addComponents() {
             componentsDsmIDFlat.push(componentsDsmID[i][j]);
         }
     }
+
+    //TODO: remove later?
+    componentsDsmIDFlat.sort(function(a, b){ return a - b });
+
     addAttacks();
 }
 
@@ -659,6 +663,7 @@ function populateJSON() {
             let componentName = components[i][j];
             let componentDsmID = componentsDsmID[i][j];
             let componentType = componentsType[i][j];
+
             selectedApps['packages'][i]['components'].push({"component": componentName, "dsm_idx": componentDsmID, "type": componentType, "domain_data":[{"domain": "explicit", "data":[]},{"domain": "implicit", "data": []},{"domain": "permission_granted", "data":[]},{"domain": "permission_usage", "data": []},{"domain": "permission_enforcement", "data": []}]});
         }
     }
@@ -674,6 +679,10 @@ function populateJSON() {
     console.log('numcolumns: ' + csv_explicit.columns.length);
     console.log(csv_explicit);
     console.log(componentsDsmIDFlat);
+
+    // componentsDsmIDFlat.sort(function(a, b){ return a - b });
+    // console.log(componentsDsmIDFlat);
+
     // first add explicit and implicit domain data.
     for (let i = 0, packageIndex = 0, compIndex = 0; i < componentsDsmIDFlat.length; i++) {
         let exInteractions = [];
