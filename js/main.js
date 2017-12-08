@@ -1155,6 +1155,18 @@ function create_all_table_headers(div_id, table) {
     console.log("My TABLE !!!!!");
     console.log(typeof(table));
 
+    //pul all the component dsmids
+    // let component_dsmids = [];
+    // table.packages.forEach(function(the_package) {
+    //     the_package.components.forEach(function(component) {
+    //         component_dsmids.push(component.dsm_idx);
+    //     });
+    // });
+    //
+    // component_dsmids.sort(function(a, b) { return a - b; });
+    // console.log("COMPOPNENET DSMI SORTED");
+    // console.log(component_dsmids);
+
     //prepare all domain header arrays
     table.domains.forEach(function(domain) {
         domain_headers.domains.push(domain.name);
@@ -1164,8 +1176,15 @@ function create_all_table_headers(div_id, table) {
             domain_headers.colspan.push(domain.subdomains.length);
 
             //create subdomains array
+            let subdomains = [];
             domain.subdomains.forEach(function (subdomain) {
-                domain_headers.subdomains.push(subdomain.name);
+                subdomains.push(subdomain.name);
+            });
+
+            subdomains.sort(function(a, b) { return a - b; });
+
+            subdomains.forEach(function(subdomain) {
+                domain_headers.subdomains.push(subdomain);
             });
         }
         else {
@@ -1175,6 +1194,8 @@ function create_all_table_headers(div_id, table) {
             domain_headers.colspan.push(1);
         }
     });
+
+    // console.log(domain_headers.subdomains);
 
     create_domain_headers(div_id, domain_headers);
 }
