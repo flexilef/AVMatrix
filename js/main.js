@@ -1102,13 +1102,12 @@ function addAttacks() {
 }
 
 function populateJSON() {
-    let jsonObject = JSON.parse(JSON.stringify(selectedApps));
     // add subdomains to explicit and implicit domains. each subdomain's name is the component's dsmID.
     for (let i = 0; i < componentsDsmID.length; i++) {
         for (let j = 1; j < componentsDsmID[i].length; j++) {
             let ID = componentsDsmID[i][j];
-            jsonObject['domains'][0]['subdomains'].push({"name": ID});
-            jsonObject['domains'][1]['subdomains'].push({"name":ID});
+            selectedApps['domains'][0]['subdomains'].push({"name": ID});
+            selectedApps['domains'][1]['subdomains'].push({"name":ID});
         }
     }
 
@@ -1116,13 +1115,13 @@ function populateJSON() {
     // first add the apps, aka packages.
     for (let i = 0; i < components.length; i++) {
         let packageName = components[i][0];
-        jsonObject['packages'].push({"package": packageName, "components": []});
+        selectedApps['packages'].push({"package": packageName, "components": []});
     }
     // next, add each app's components.
     for (let i = 0; i < components.length; i++) {
         for (let j = 1; j < components[i].length; j++) {
             let componentName = components[i][j];
-            jsonObject['packages'][i]['components'].push({"component": componentName, "domain_data":[{"domain": "explicit_domain", "data":[]},{"domain": "implicit_domain", "data": []},{"domain": "permission_granted_domain", "data":[]},{"domain": "permission_usage_domain", "data": []},{"domain": "permission_enforcement_domain", "data": []}]});
+            selectedApps['packages'][i]['components'].push({"component": componentName, "domain_data":[{"domain": "explicit_domain", "data":[]},{"domain": "implicit_domain", "data": []},{"domain": "permission_granted_domain", "data":[]},{"domain": "permission_usage_domain", "data": []},{"domain": "permission_enforcement_domain", "data": []}]});
         }
     }
 
@@ -1130,7 +1129,7 @@ function populateJSON() {
     console.log(csv_explicit);
     console.log(csv_explicit[20][21]);
     console.log(csv_perm_g);
-    console.log(jsonObject['packages'][0]['components'].length);
+    console.log(selectedApps['packages'][0]['components'].length);
     console.log('test');
     console.log(csv_explicit.columns[3]);
     console.log(componentsDsmIDFlat[0]);
@@ -1208,35 +1207,34 @@ function populateJSON() {
         }
         // populate the json fields.
         // first explicit.
-        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'] = 
-            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'].concat(exInteractions);
+        selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'] = 
+            selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][0]['data'].concat(exInteractions);
         // then implicit.
-        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'] = 
-            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'].concat(impInteractions);
+        selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'] = 
+            selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][1]['data'].concat(impInteractions);
         // then permissions fields.
-        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'] = 
-            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'].concat(permGInteractions);
+        selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'] = 
+            selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][2]['data'].concat(permGInteractions);
 
-        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'] = 
-            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'].concat(permUInteractions);
+        selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'] = 
+            selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][3]['data'].concat(permUInteractions);
 
-        jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'] = 
-            jsonObject['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'].concat(permEInteractions);
+        selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'] = 
+            selectedApps['packages'][packageIndex]['components'][compIndex]['domain_data'][4]['data'].concat(permEInteractions);
 
         compIndex++;
-        if (compIndex === jsonObject['packages'][packageIndex]['components'].length) {
+        if (compIndex === selectedApps['packages'][packageIndex]['components'].length) {
             packageIndex++;
             compIndex = 0;
         }
     }
     
-    console.log(jsonObject);
-    selectedApps = JSON.stringify(jsonObject);
+    console.log('json object derr');
+    console.log(selectedApps);
     populateAttacksJSON();
 }
 
 function populateAttacksJSON() {
-    let jsonAttackObject = JSON.parse(JSON.stringify(attacksJSON));
     console.log('attacks');
     console.log(attacks);
     let type, resourceDsmID, resource, potDsmId, potApp, potComp, malApp, malDsmID, malComp, vulApp, vulDsmID, vulComp;
@@ -1278,10 +1276,10 @@ function populateAttacksJSON() {
                 attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": VulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
         }
         
-        jsonAttackObject.push(attackObj);
+        attacksJSON.push(attackObj);
     }
-        console.log(jsonAttackObject);
-        attacksJSON = JSON.stringify(jsonAttackObject);
+        console.log('atttacksjson');
+        console.log(attacksJSON);
 }
 
 function updateAppsToVisualize(event) {
