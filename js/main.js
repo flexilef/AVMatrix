@@ -1031,57 +1031,72 @@ function create_all_table_rows(div_id, table) {
     let grouped_domain_data = [];
     let domain_classes = [];
     let permission_classes = [];
+    let sorted_component_dsmidx = [];
 
     //prepare rows data
     table.packages.forEach(function(the_package) {
         the_package.components.forEach(function(component) {
-            component.domain_data.forEach(function(domain_datum) {
-                //maps each element in grouped_domain_data with their respective column headers
-                table.domains.forEach(function(domain) {
-                    if(domain.name === domain_datum.domain) {
-                        //skip this step for permission domains since we will not list all of their subdomains
+            sorted_component_dsmidx.push(component.dsm_idx);
+        });
+    });
+
+    sorted_component_dsmidx.sort(function(a, b) { return a - b; });
+
+    //prepare rows data
+    sorted_component_dsmidx.forEach(function(sorted_component) {
+        table.packages.forEach(function(the_package) {
+            the_package.components.forEach(function(component) {
+                //make sure we prepare the data with ordered components
+                if(sorted_component === component.dsm_idx) {
+                    component.domain_data.forEach(function (domain_datum) {
+                        //maps each element in grouped_domain_data with their respective column headers
+                        table.domains.forEach(function (domain) {
+                            if (domain.name === domain_datum.domain) {
+                                //skip this step for permission domains since we will not list all of their subdomains
+                                if (!domain_datum.domain.toString().match(/^permission*/)) {
+                                    domain.subdomains.forEach(function (subdomain) {
+                                        domain_classes.push(domain.name.toString().replace(/\s/g, "-") +
+                                            "_dsmidx-" + subdomain.name.toString().replace(/\s/g, "-"));
+                                    });
+                                }
+                                else {
+                                    permission_classes.push(domain.name.toString().replace(/\s/g, "-"));
+                                }
+                            }
+                        });
+
+                        //group the row data for each non-permission domain
                         if (!domain_datum.domain.toString().match(/^permission*/)) {
-                            domain.subdomains.forEach(function (subdomain) {
-                                domain_classes.push(domain.name.toString().replace(/\s/g, "-") +
-                                    "_dsmidx-" + subdomain.name.toString().replace(/\s/g, "-"));
+                            domain_datum.data.forEach(function (data) {
+                                grouped_domain_data.push(data);
                             });
                         }
                         else {
-                            permission_classes.push(domain.name.toString().replace(/\s/g, "-"));
+                            //empty cell for the permission domains
+                            grouped_domain_data.push("Click Me!");
                         }
-                    }
-                });
-
-                //group the row data for each non-permission domain
-                if(!domain_datum.domain.toString().match(/^permission*/)) {
-                    domain_datum.data.forEach(function (data) {
-                        grouped_domain_data.push(data);
                     });
-                }
-                else {
-                    //empty cell for the permission domains
-                    grouped_domain_data.push("Click Me!");
+
+                    //add in the permission classes to the array of domain classes
+                    permission_classes.forEach(function (perm_class) {
+                        domain_classes.push(perm_class);
+                    });
+
+                    let data = {
+                        "package": the_package.package,
+                        "component": component.component,
+                        "component_dsm_idx": component.dsm_idx,
+                        "components_count": the_package.components.length,
+                        "data": grouped_domain_data,
+                        "domain_classes": domain_classes
+                    };
+
+                    rows_data.push(data);
+
+                    grouped_domain_data = [];
+                    domain_classes = [];
                 }
             });
-
-            //add in the permission classes to the array of domain classes
-            permission_classes.forEach(function(perm_class) {
-                domain_classes.push(perm_class);
-            });
-
-            let data = {
-                "package": the_package.package,
-                "component": component.component,
-                "component_dsm_idx": component.dsm_idx,
-                "components_count": the_package.components.length,
-                "data": grouped_domain_data,
-                "domain_classes": domain_classes
-            };
-
-            rows_data.push(data);
-
-            grouped_domain_data = [];
-            domain_classes = [];
         });
     });
 
