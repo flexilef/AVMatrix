@@ -1125,22 +1125,19 @@ function create_table_rows(div_id, rows, rowspan) {
         .append("td")
         .attr("data-row", rows.package + "_" + rows.component + "_dsmidx-" + rows.component_dsm_idx)
         .attr("data-col", function(d, i) {
-            console.log("DOMAIN CLASSES");
-            console.log(rows.domain_classes[i]);
             return rows.domain_classes[i];
         })
         .classed("cell-active", function(data) {
-            if(data === 1) {
+            if(data === "1") {
                 return true;
             }
         })
         .classed("cell-notactive", function(data) {
-            if(data === 0) {
+            if(data === "0") {
                 return true;
             }
         })
         .attr("data-matrix_value", function(d) { return d; })
-        .text(function(d) { return d; })
 }
 
 function create_all_table_headers(div_id, table) {
