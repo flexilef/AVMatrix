@@ -1043,17 +1043,21 @@ function create_all_table_rows(div_id, table) {
     sorted_component_dsmidx.sort(function(a, b) { return a - b; });
 
     //prepare rows data
-    sorted_component_dsmidx.forEach(function(sorted_component) {
+    sorted_component_dsmidx.forEach(function(sorted_component_dsmidx) {
         table.packages.forEach(function(the_package) {
             the_package.components.forEach(function(component) {
                 //make sure we prepare the data with ordered components
-                if(sorted_component === component.dsm_idx) {
+                if(sorted_component_dsmidx === component.dsm_idx) {
                     component.domain_data.forEach(function (domain_datum) {
                         //maps each element in grouped_domain_data with their respective column headers
                         table.domains.forEach(function (domain) {
                             if (domain.name === domain_datum.domain) {
                                 //skip this step for permission domains since we will not list all of their subdomains
                                 if (!domain_datum.domain.toString().match(/^permission*/)) {
+                                    domain.subdomains.sort( function(a, b) {
+                                        return a.name - b.name;
+                                    });
+
                                     domain.subdomains.forEach(function (subdomain) {
                                         domain_classes.push(domain.name.toString().replace(/\s/g, "-") +
                                             "_dsmidx-" + subdomain.name.toString().replace(/\s/g, "-"));
