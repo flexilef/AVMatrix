@@ -23,7 +23,7 @@ let selectedApps = {
             "subdomains": []
         },
         {
-            "name": "permission_granted",
+            "name": "permission-granted",
             "subdomains": [
                 {
                     "name": "Contacts"
@@ -139,7 +139,7 @@ let selectedApps = {
             ]
         },
         {
-            "name": "permission_usage",
+            "name": "permission-usage",
             "subdomains": [
                 {
                     "name": "Contacts"
@@ -255,7 +255,7 @@ let selectedApps = {
             ]
         },
         {
-            "name": "permission_enforcement",
+            "name": "permission-enforcement",
             "subdomains": [
                 {
                     "name": "Contacts"
@@ -661,7 +661,7 @@ function populateJSON() {
             let componentDsmID = componentsDsmID[i][j];
             let componentType = componentsType[i][j];
 
-            selectedApps['packages'][i]['components'].push({"component": componentName, "dsm_idx": componentDsmID, "type": componentType, "domain_data":[{"domain": "explicit", "data":[]},{"domain": "implicit", "data": []},{"domain": "permission_granted", "data":[]},{"domain": "permission_usage", "data": []},{"domain": "permission_enforcement", "data": []}]});
+            selectedApps['packages'][i]['components'].push({"component": componentName, "dsm_idx": componentDsmID, "type": componentType, "domain_data":[{"domain": "explicit", "data":[]},{"domain": "implicit", "data": []},{"domain": "permission-granted", "data":[]},{"domain": "permission-usage", "data": []},{"domain": "permission-enforcement", "data": []}]});
         }
     }
 
@@ -955,7 +955,7 @@ function add_permission_popovers() {
                     component.domain_data.forEach(function (domain_datum) {
                         if (domain_datum.domain.replace(/\s/g, "-") === permission_type) {
                             domain_datum.data.forEach(function (data, index) {
-                                if (data === 1) {
+                                if (data === "1") {
                                     let permission = {};
                                     //the index of the subdomain in the tableJSON that contains the name of the permission
                                     permission.indices = [];
