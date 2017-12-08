@@ -23,7 +23,7 @@ let selectedApps = {
             "subdomains": []
         },
         {
-            "name": "permission granted",
+            "name": "permission_granted",
             "subdomains": [
                 {
                     "name": "Contacts"
@@ -139,7 +139,7 @@ let selectedApps = {
             ]
         },
         {
-            "name": "permission usage",
+            "name": "permission_usage",
             "subdomains": [
                 {
                     "name": "Contacts"
@@ -255,7 +255,7 @@ let selectedApps = {
             ]
         },
         {
-            "name": "permission enforcement",
+            "name": "permission_enforcement",
             "subdomains": [
                 {
                     "name": "Contacts"
@@ -643,7 +643,7 @@ function populateJSON() {
         for (let j = 1; j < componentsDsmID[i].length; j++) {
             let ID = componentsDsmID[i][j];
             selectedApps['domains'][1]['subdomains'].push({"name": ID});
-            selectedApps['domains'][2]['subdomains'].push({"name":ID});
+            selectedApps['domains'][2]['subdomains'].push({"name": ID});
         }
     }
 
@@ -659,7 +659,7 @@ function populateJSON() {
             let componentName = components[i][j];
             let componentDsmID = componentsDsmID[i][j];
             let componentType = componentsType[i][j];
-            selectedApps['packages'][i]['components'].push({"component": componentName, "dsm_idx": componentDsmID, "type": componentType, "domain_data":[{"domain": "explicit_domain", "data":[]},{"domain": "implicit_domain", "data": []},{"domain": "permission_granted_domain", "data":[]},{"domain": "permission_usage_domain", "data": []},{"domain": "permission_enforcement_domain", "data": []}]});
+            selectedApps['packages'][i]['components'].push({"component": componentName, "dsm_idx": componentDsmID, "type": componentType, "domain_data":[{"domain": "explicit", "data":[]},{"domain": "implicit", "data": []},{"domain": "permission_granted", "data":[]},{"domain": "permission_usage", "data": []},{"domain": "permission_enforcement", "data": []}]});
         }
     }
 
@@ -1026,29 +1026,10 @@ function create_all_table_rows(div_id, table) {
     let domain_classes = [];
     let permission_classes = [];
 
-    // let table = JSON.parse(table_json);
-
     //prepare rows data
     table.packages.forEach(function(the_package) {
         the_package.components.forEach(function(component) {
             component.domain_data.forEach(function(domain_datum) {
-
-                //uncomment below to revert to displaying all permission subdomain data
-                //
-                //maps each element in grouped_domain_data with their respective column header
-                // table.domains.forEach(function(domain) {
-                //     if(domain.name === domain_datum.domain) {
-                //         domain.subdomains.forEach(function(subdomain) {
-                //             domain_classes.push(domain.name.toString().replace(/\s/g, "-") +
-                //                 "_" + subdomain.name.toString().replace(/\s/g, "-"));
-                //         });
-                //     }
-                // });
-                //
-                // domain_datum.data.forEach(function(data) {
-                //     grouped_domain_data.push(data);
-                // });
-
                 //maps each element in grouped_domain_data with their respective column headers
                 table.domains.forEach(function(domain) {
                     if(domain.name === domain_datum.domain) {
@@ -1119,9 +1100,6 @@ function create_table_rows(div_id, rows, rowspan) {
         .attr("data-cpn", rows.component)
         .attr("data-dsmidx", rows.component_dsm_idx);
 
-    console.log("COMPOENNT DSM");
-    console.log(rows.component_dsm_idx);
-
     //create package headers. If rowspan is specified, add it, otherwise, skip creating it
     if(rowspan !== false) {
         row.append("td")
@@ -1147,6 +1125,8 @@ function create_table_rows(div_id, rows, rowspan) {
         .append("td")
         .attr("data-row", rows.package + "_" + rows.component + "_dsmidx-" + rows.component_dsm_idx)
         .attr("data-col", function(d, i) {
+            console.log("DOMAIN CLASSES");
+            console.log(rows.domain_classes[i]);
             return rows.domain_classes[i];
         })
         .classed("cell-active", function(data) {
@@ -1160,6 +1140,7 @@ function create_table_rows(div_id, rows, rowspan) {
             }
         })
         .attr("data-matrix_value", function(d) { return d; })
+        .text(function(d) { return d; })
 }
 
 function create_all_table_headers(div_id, table) {
@@ -1168,8 +1149,6 @@ function create_all_table_headers(div_id, table) {
         "subdomains": ["Packages", "Components"],
         "colspan": [1, 1]
     };
-
-    // let table = JSON.parse(table_json);
 
     console.log("My TABLE !!!!!");
     console.log(typeof(table));
@@ -1248,8 +1227,6 @@ Example 10 - rendering analysis results (testing is json structure is good)
 
 
 function render_analysis() {
-    console.log("TYPE!!!!");
-    console.log(attackJson);
     attackJson.forEach(function(attack) {
         render_attack(attack);
     });
