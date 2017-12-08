@@ -234,14 +234,17 @@ td.cell-active {
 /*}*/
 
 td[data-attacktype="privilege escalation"] {
+  cursor: pointer;
   background-color: indianred;
 }
 
 td[data-attacktype="intent spoofing"] {
+  cursor: pointer;
   background-color: indianred;
 }
 
 td[data-attacktype="unauthorized intent receipt"] {
+  cursor: pointer;
   background-color: indianred;
 }
 
@@ -250,4 +253,23 @@ td[data-permission_active="true"] {
   background-color: #42DCA3;
 }
 
+.popover-header.permission {
+  background-color: #32383e;
+  border-bottom: 1px solid #42DCA3;
+  color: #42DCA3;
+  font-size: 15px;
+}
 
+.popover-header.attack {
+  background-color: #32383e;
+  border-bottom: 1px solid indianred;
+  color: indianred;
+  font-size: 15px;
+}
+
+
+.popover-body {
+  background-color: #212529;
+  color: white;
+  font-size: 10px;
+}

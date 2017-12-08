@@ -931,7 +931,7 @@ function add_attack_popovers() {
         $(this).attr("data-trigger", "click");
         $(this).attr("data-placement", "auto");
         $(this).attr("data-html", "true");
-        $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+        $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header attack\"></h3><div class=\"popover-body\"></div></div>');
         $(this).attr("data-title", attack_type);
         $(this).attr("data-content", "<p>Attacker: " + attack_info.attacker + "</p>" + "<p>Victim: " + attack_info.victim + "</p>");
     });
@@ -994,7 +994,7 @@ function add_permission_popovers() {
             $(this).attr("data-trigger", "click");
             $(this).attr("data-placement", "auto");
             $(this).attr("data-html", "true");
-            $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header\"></h3><div class=\"popover-body\"></div></div>');
+            $(this).attr("data-template", '<div class=\"popover\" role=\"tooltip\"><div class=\"arrow\"></div><h3 class=\"popover-header permission\"></h3><div class=\"popover-body\"></div></div>');
             $(this).attr("data-title", permission_type);
             $(this).attr("data-content", popover_content);
         }
