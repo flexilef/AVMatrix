@@ -137,25 +137,27 @@
             <div class="col-lg-8 mx-auto">
                 <form>
                     <div class="form-group">
-                        <label class="btn btn-default" for="analysis-file-selector">
-                            <input id="analysis-file-selector" type="file" style="display:none"
-                                   onchange="$('#analysis-file-info').html(this.files[0].name)">
-                            Browse for analysis files
-                        </label>
-                        <span class='label label-info' id="analysis-file-info"></span>
-                        <label class="btn btn-default" for="apps-file-selector">
-                            <input id="apps-file-selector" type="file" multiple style="display:none"
-                                   onchange="this.files.forEach(function(file, index) {
-//                                       if(index === 0) {
-                                            $('#apps-file-info').html(file.name);
-//                                        }
-//                                        else {
-//                                            $('#apps-file-info').html(file.name);
-//                                        }
-                                   })">
-                            Browse for application files
-                        </label>
-                        <span class='label label-info' id="apps-file-info"></span>
+                        <!--new-->
+                        <!--<label class="btn btn-default" for="analysis-file-selector">-->
+                            <!--<input id="analysis-file-selector" type="file" style="display:none"-->
+                                   <!--onchange="$('#analysis-file-info').html(this.files[0].name)">-->
+                            <!--Browse for analysis files-->
+                        <!--</label>-->
+                        <!--<span class='label label-info' id="analysis-file-info"></span>-->
+                        <!--<label class="btn btn-default" for="apps-file-selector">-->
+                            <!--<input id="apps-file-selector" type="file" multiple style="display:none"-->
+                                   <!--onchange="this.files.forEach(function(file, index) {-->
+<!--//                                       if(index === 0) {-->
+                                            <!--$('#apps-file-info').html(file.name);-->
+<!--//                                        }-->
+<!--//                                        else {-->
+<!--//                                            $('#apps-file-info').html(file.name);-->
+<!--//                                        }-->
+                                   <!--})">-->
+                            <!--Browse for application files-->
+                        <!--</label>-->
+                        <!--<span class='label label-info' id="apps-file-info"></span>-->
+                        <!--new end-->
                         <!--<label>-->
                             <!--Analysis Results File-->
                             <!--<input type="file" class="form-control custom-file-input" id="analysis-file" onchange="addAnalysisResults(event)" aria-describedby="analysis-file-help">-->
@@ -167,6 +169,17 @@
                             <!--<span class="custom-file-control"></span>-->
                             <!--<small id="app-file-help" class="form-text text-muted">Submit at least 2 application files to visualize</small>-->
                     <!--<button type="button" id="visualize_button" onclick="visualize()" class="btn btn-primary" multiple disabled=true>Visualize</button>-->
+                        <div>
+                            <label for="analysis-input">Provide analysis data: </label>
+                            <input type="file" id="analysis-file" onchange="addAnalysisResults(event)">
+                        </div>
+                        <div>
+                            <label for="app-input">Choose app to visualize: </label>
+                            <input  type="file" id="app-file" multiple onchange="addAppFiles(event)">
+                        </div>
+                        <div>
+                            <button id="visualize_button" onclick="visualize()" disabled=true type="button" class="btn btn-outline-primary btn-sm">Visualize</button>
+                        </div>
                     </div>
                 </form>
 
