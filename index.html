@@ -67,7 +67,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Grayscale - Start Bootstrap Theme</title>
+    <title>AV-Matrix</title>
 
     <!-- Bootstrap core CSS -->
     <link href="js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -87,7 +87,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">AV-Matrix</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
@@ -114,40 +114,88 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <h1 class="brand-heading">Grayscale</h1>
-                    <p class="intro-text">A free, responsive, one page Bootstrap theme.
-                        <br>Created by Start Bootstrap.</p>
-                    <a href="#about" class="btn btn-circle js-scroll-trigger">
+                    <h1 class="brand-heading">AV-Matrix</h1>
+                    <p class="intro-text">An architecture visualization tool for the DEL-Droid application</p>
+                    <a href="#visualization_input" class="btn btn-circle js-scroll-trigger">
                         <i class="fa fa-angle-double-down animated"></i>
                     </a>
                 </div>
-            </div>
-            <!--Adding our shit-->
-            <div class="row">
-                <h2>Example 8 - Updated JSON for entire table render</h2>
-                <form class="app-input">
-                    <div>
-                        <label for="analysis-input">Provide analysis data: </label>
-                        <input type="file" id="analysis-file" onchange="addAnalysisResults(event)">
-                    </div>
-                    <div>
-                        <label for="app-input">Choose app to visualize: </label>
-                        <input  type="file" id="app-file" multiple onchange="addAppFiles(event)">
-                    </div>
-                    <div>
-                        <button id="visualize_button" onclick="visualize()" disabled=true type="button" class="btn btn-outline-primary btn-sm">Visualize</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
 </header>
 
-<!-- About Section -->
+<!-- visualization Section -->
+<section id="visualization_input" class="visualization-section content-section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Please submit your DEL-Droid input files for us to visualize</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form>
+                    <div class="form-group">
+                        <label class="btn btn-default" for="analysis-file-selector">
+                            <input id="analysis-file-selector" type="file" style="display:none"
+                                   onchange="$('#analysis-file-info').html(this.files[0].name)">
+                            Browse for analysis files
+                        </label>
+                        <span class='label label-info' id="analysis-file-info"></span>
+                        <label class="btn btn-default" for="apps-file-selector">
+                            <input id="apps-file-selector" type="file" multiple style="display:none"
+                                   onchange="this.files.forEach(function(file, index) {
+//                                       if(index === 0) {
+                                            $('#apps-file-info').html(file.name);
+//                                        }
+//                                        else {
+//                                            $('#apps-file-info').html(file.name);
+//                                        }
+                                   })">
+                            Browse for application files
+                        </label>
+                        <span class='label label-info' id="apps-file-info"></span>
+                        <!--<label>-->
+                            <!--Analysis Results File-->
+                            <!--<input type="file" class="form-control custom-file-input" id="analysis-file" onchange="addAnalysisResults(event)" aria-describedby="analysis-file-help">-->
+                            <!--<span class="custom-file-control"></span>-->
+                            <!--<small id="analysis-file-help" class="form-text text-muted">Submit only ONE analysis file</small>-->
+                        <!--</label>-->
+                        <!--<label>Application Information Files:</label>-->
+                            <!--<input type="file" class="form-control" id="app-file" aria-describedby="app-file-help">-->
+                            <!--<span class="custom-file-control"></span>-->
+                            <!--<small id="app-file-help" class="form-text text-muted">Submit at least 2 application files to visualize</small>-->
+                    <!--<button type="button" id="visualize_button" onclick="visualize()" class="btn btn-primary" multiple disabled=true>Visualize</button>-->
+                    </div>
+                </form>
+
+                <!--<form class="app-input">-->
+                    <!--<div>-->
+                        <!--<label>Provide analysis data: </label>-->
+                        <!--<input type="file" id="analysis-file" onchange="addAnalysisResults(event)">-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<label>Choose app to visualize: </label>-->
+                        <!--<input  type="file" id="app-file" multiple onchange="addAppFiles(event)">-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<button id="visualize_button" onclick="visualize()" disabled=true type="button" class="btn btn-outline-primary btn-sm">Visualize</button>-->
+                    <!--</div>-->
+                <!--</form>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mx-auto">
+                <div id="example8" class="row"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--about section-->
 <section id="about" class="content-section text-center">
     <div class="container">
-        <div id="example8" class="row"></div>
-
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h2>About Grayscale</h2>

@@ -1126,6 +1126,9 @@ function create_table_rows(div_id, rows, rowspan) {
         .attr("data-cpn", rows.component)
         .attr("data-dsmidx", rows.component_dsm_idx);
 
+    console.log("COMPOENNT DSM");
+    console.log(rows.component_dsm_idx);
+
     //create package headers. If rowspan is specified, add it, otherwise, skip creating it
     if(rowspan !== false) {
         row.append("td")
