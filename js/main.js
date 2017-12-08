@@ -685,9 +685,10 @@ function populateJSON() {
             //j+3 to start at the first explicit value
             if (componentsDsmIDFlat[i] === csv_explicit.columns[j+3]) {
                 // then populate component's interactions data.
-                for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
+                // for (let k = 0; k < csv_explicit.columns.length - 4; k++) {
+                for (let k = 0; k < csv_explicit.columns.length; k++) {
                     // check if column component exists in user's component list.
-                    if (componentsDsmIDFlat.includes(csv_explicit.columns[k])){
+                    if (componentsDsmIDFlat.includes(csv_explicit.columns[k+3])){
                         // if it does, then add the data.
                         exInteractions.push(csv_explicit[j][k]);
                         impInteractions.push(csv_implicit[j][k]);
