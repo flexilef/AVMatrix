@@ -638,7 +638,8 @@ function addAttacks() {
 }
 
 function populateJSON() {
-    let jsonObject = JSON.parse(JSON.stringify(selectedApps));
+    // let jsonObject = JSON.parse(JSON.stringify(selectedApps));
+    let jsonObject = selectedApps;
     // add subdomains to explicit and implicit domains. each subdomain's name is the component's dsmID.
     for (let i = 0; i < componentsDsmID.length; i++) {
         for (let j = 1; j < componentsDsmID[i].length; j++) {
@@ -774,7 +775,8 @@ function populateJSON() {
 }
 
 function populateAttacksJSON() {
-    let jsonAttackObject = JSON.parse(JSON.stringify(attackJson));
+    // let jsonAttackObject = JSON.parse(JSON.stringify(attackJson));
+    let jsonAttackObject = attackJson;
     console.log('attacks');
     console.log(attacks);
     let type, resourceDsmID, resource, potDsmId, potApp, potComp, malApp, malDsmID, malComp, vulApp, vulDsmID, vulComp;
@@ -813,7 +815,7 @@ function populateAttacksJSON() {
                 attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
                 break;
             case 'unauthorized intent receipt':
-                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": VulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
+                attackObj = {"attack_type": type, "attack_info":{"malicious_app": malApp, "malicious_dsmidx": malDsmID, "malicious_component": malComp, "vulnerable_app": vulApp, "vulnerable_dsmidx": vulDsmID, "vulmerable_component": vulComp, "pot_app": potApp, "pot_dsmidx": potDsmId, "pot_component": potComp}};
         }
         
         jsonAttackObject.push(attackObj);
@@ -1122,7 +1124,7 @@ function create_table_rows(div_id, rows, rowspan) {
         .append("tr")
         .attr("data-pkg", rows.package)
         .attr("data-cpn", rows.component)
-        .attr("data-dsmidx", rows.component_dsm_idx)
+        .attr("data-dsmidx", rows.component_dsm_idx);
 
     //create package headers. If rowspan is specified, add it, otherwise, skip creating it
     if(rowspan !== false) {
