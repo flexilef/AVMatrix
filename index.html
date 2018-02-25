@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AV-Matrix</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="js/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/grayscale.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">AV-Matrix</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#visualization_input">Try Me</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Intro Header -->
+<header class="masthead">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h1 class="brand-heading">AV-Matrix</h1>
+                    <p class="intro-text">An architecture visualization tool for the DEL-Droid application</p>
+                    <a href="#visualization_input" class="btn btn-circle js-scroll-trigger">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- visualization input Section -->
+<section id="visualization_input" class="content-section text-center">
+    <div class="container">
+        <div class="row top-buffer">
+            <div class="col-lg-8 mx-auto">
+                <h2>Please submit your DEL-Droid input files for us to visualize</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <label class="btn btn-default" for="analysis-file-selector">
+                                    <input id="analysis-file-selector" type="file" style="display:none"
+                                           onchange="
+                                           addAnalysisResults(event);
+                                           $('#analysis-file-info').html('...' + this.files[0].name)">
+                                    Browse for analysis files
+                                </label>
+                                <span class='label label-info' id="analysis-file-info"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <label class="btn btn-default" for="apps-file-selector">
+                                    <input id="apps-file-selector" type="file" multiple style="display:none"
+                                           onchange="
+                                            addAppFiles(event);
+                                            $('#apps-file-info').html('...' + this.files.length+' files added...');
+                                            $('#visualize_button').attr('disabled', false);">
+                                    Browse for application files
+                                </label>
+                                <span class='label label-info' id="apps-file-info"></span>
+                            </div>
+                        </div>
+                        <div class="row top-buffer">
+                            <div class="col-lg-4 mx-auto">
+                                <button id="visualize_button" onclick="visualize()" disabled=false type="button" class="btn btn-default btn-lg">Visualize</button>
+                                <a id="visualize_anchor" href="#visualization" class="js-scroll-trigger hidden"></a>
+                            </div>
+                        </div>
+                    </div>
+                        <!--new end-->
+                        <!--<label>-->
+                            <!--Analysis Results File-->
+                            <!--<input type="file" class="form-control custom-file-input" id="analysis-file" onchange="addAnalysisResults(event)" aria-describedby="analysis-file-help">-->
+                            <!--<span class="custom-file-control"></span>-->
+                            <!--<small id="analysis-file-help" class="form-text text-muted">Submit only ONE analysis file</small>-->
+                        <!--</label>-->
+                        <!--<label>Application Information Files:</label>-->
+                            <!--<input type="file" class="form-control" id="app-file" aria-describedby="app-file-help">-->
+                            <!--<span class="custom-file-control"></span>-->
+                            <!--<small id="app-file-help" class="form-text text-muted">Submit at least 2 application files to visualize</small>-->
+                    <!--<button type="button" id="visualize_button" onclick="visualize()" class="btn btn-primary" multiple disabled=true>Visualize</button>-->
+                        <!--<div>-->
+                            <!--<label for="analysis-input">Provide analysis data: </label>-->
+                            <!--<input type="file" id="analysis-file" onchange="addAnalysisResults(event)">-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<label for="app-input">Choose app(s) to visualize: </label>-->
+                            <!--<input  type="file" id="app-file" multiple onchange="addAppFiles(event)">-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<button id="visualize_button" onclick="visualize()" disabled=true type="button" class="btn btn-outline-primary btn-sm">Visualize</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </form>
+
+                <!--<form class="app-input">-->
+                    <!--<div>-->
+                        <!--<label>Provide analysis data: </label>-->
+                        <!--<input type="file" id="analysis-file" onchange="addAnalysisResults(event)">-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<label>Choose app to visualize: </label>-->
+                        <!--<input  type="file" id="app-file" multiple onchange="addAppFiles(event)">-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<button id="visualize_button" onclick="visualize()" disabled=true type="button" class="btn btn-outline-primary btn-sm">Visualize</button>-->
+                    <!--</div>-->
+                <!--</form>-->
+            </div>
+        </div>
+        <!--<div class="row">-->
+            <!--<div class="col-lg-12 mx-auto">-->
+                <!--<div id="example8" class="row"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</section>
+
+<!-- visualization input Section -->
+<section id="visualization" class="visualization-section content-section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Least Privilege Architecture</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mx-auto">
+                <div id="example8" class="row"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--about section-->
+<section id="about" class="content-section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>About AV-Matrix</h2>
+                <p>AV-Matrix is a....</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Download Section -->
+<!--<section id="download" class="download-section content-section text-center">-->
+    <!--<div class="container">-->
+        <!--<div class="col-lg-8 mx-auto">-->
+            <!--<h2>Download Grayscale</h2>-->
+            <!--<p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>-->
+            <!--<a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</section>-->
+
+<!-- Contact Section -->
+<!--<section id="contact" class="content-section text-center">-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col-lg-8 mx-auto">-->
+                <!--<h2>Contact Start Bootstrap</h2>-->
+                <!--<p>Feel free to leave us a comment on the-->
+                    <!--<a href="http://startbootstrap.com/template-overviews/grayscale/">Grayscale template overview page</a>-->
+                    <!--on Start Bootstrap to give some feedback about this theme!</p>-->
+                <!--<ul class="list-inline banner-social-buttons">-->
+                    <!--<li class="list-inline-item">-->
+                        <!--<a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg">-->
+                            <!--<i class="fa fa-twitter fa-fw"></i>-->
+                            <!--<span class="network-name">Twitter</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="list-inline-item">-->
+                        <!--<a href="https://github.com/BlackrockDigital/startbootstrap" class="btn btn-default btn-lg">-->
+                            <!--<i class="fa fa-github fa-fw"></i>-->
+                            <!--<span class="network-name">Github</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="list-inline-item">-->
+                        <!--<a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg">-->
+                            <!--<i class="fa fa-google-plus fa-fw"></i>-->
+                            <!--<span class="network-name">Google+</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</section>-->
+
+<!-- Map Section -->
+<!--<div id="map"></div>-->
+
+<!-- Footer -->
+<footer>
+    <div class="container text-center">
+        <p>Copyright &copy; Your Website 2017</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="js/vendor/jquery/jquery.min.js"></script>
+<script src="js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="js/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+<!--d3 library-->
+<script src="js/vendor/d3.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="js/grayscale.min.js"></script>
+<script src="js/main.js"></script>
+
+
+</body>
+
+</html>

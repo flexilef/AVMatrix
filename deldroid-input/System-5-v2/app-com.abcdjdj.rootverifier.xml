@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<application>
+    <appId>729</appId>
+    <name>Root Verifier</name>
+    <packageName>com.abcdjdj.rootverifier</packageName>
+    <versionCode>7</versionCode>
+    <appcategory>Default</appcategory>
+    <appUsesPermissions>
+        <appUsesPermission>ACCESS_SUPERUSER</appUsesPermission>
+    </appUsesPermissions>
+    <appActuallyUsesPermissions/>
+    <appRequiredPermissions/>
+    <appDefinedPermissions/>
+    <components>
+        <component>
+            <componentId>9251</componentId>
+            <dsmIdx>24</dsmIdx>
+            <compName>MainActivity</compName>
+            <fullName>com.abcdjdj.rootverifier.MainActivity</fullName>
+            <appPackageName>com.abcdjdj.rootverifier</appPackageName>
+            <type>activity</type>
+            <exported>T</exported>
+            <compRequiredPermissions/>
+            <compActuallyUsedPermissions/>
+            <intentFilters>
+                <intentFilter>
+                    <ifID>6218</ifID>
+                    <actions>
+                        <action>android.intent.action.MAIN</action>
+                    </actions>
+                    <categories>
+                        <category>android.intent.category.LAUNCHER</category>
+                    </categories>
+                    <data/>
+                    <dataPath></dataPath>
+                </intentFilter>
+            </intentFilters>
+        </component>
+    </components>
+</application>
